@@ -21,13 +21,22 @@ public class Cart {
     @JoinColumn(name = "cartDetailsID")
     private Set<CartDetails> cartDetails = new HashSet<>();
 
+    public void addCartDetails(CartDetails cartDetail){
+        cartDetail.getCart().add(this);
+        cartDetails.add(cartDetail);
+    }
+
 
     public Cart() {
     }
 
-    public Cart(Set<ClientStore> clientStore, Set<ClientOnline> clientOnline, Set<CartDetails> cartDetails) {
+    /*public Cart(Set<ClientStore> clientStore, Set<ClientOnline> clientOnline, Set<CartDetails> cartDetails) {
         this.clientStore = clientStore;
         this.clientOnline = clientOnline;
+        this.cartDetails = cartDetails;
+    }*/
+
+    public Cart(Set<CartDetails> cartDetails) {
         this.cartDetails = cartDetails;
     }
 
@@ -59,13 +68,5 @@ public class Cart {
         this.cartDetails = cartDetails;
     }
 
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "cartID=" + cartID +
-                ", clientStore=" + clientStore +
-                ", clientOnline=" + clientOnline +
-                ", cartDetails=" + cartDetails +
-                '}';
-    }
+
 }

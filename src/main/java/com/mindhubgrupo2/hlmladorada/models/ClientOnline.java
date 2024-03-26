@@ -92,4 +92,17 @@ public class ClientOnline {
         cart.setCartHolder(this);
         carts.add(cart);
     }
+
+    @Override
+    public String toString() {
+        return "ClientOnline{" +
+                "clientOnlineID=" + clientOnlineID +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", balance=" + balance +
+                ", carts=" + carts +
+                '}';
+    }
 }

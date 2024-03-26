@@ -11,14 +11,16 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartID;
-
+    /*@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "clientStCart")
     private Set<ClientStore> clientStore = new HashSet<>();
 
 
-    private Set<ClientOnline> clientOnline = new HashSet<>();
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cartDetailsID")
+    @JoinColumn(name = "clientOnCart")
+    private Set<ClientOnline> clientOnline = new HashSet<>();
+*/
+    @ManyToMany(mappedBy = "carts", fetch = FetchType.EAGER)
     private Set<CartDetails> cartDetails = new HashSet<>();
 
     public void addCartDetails(CartDetails cartDetail){
@@ -36,15 +38,13 @@ public class Cart {
         this.cartDetails = cartDetails;
     }*/
 
-    public Cart(Set<CartDetails> cartDetails) {
-        this.cartDetails = cartDetails;
-    }
+
 
     public int getCartID() {
         return cartID;
     }
 
-    public Set<ClientStore> getClientStore() {
+   /* public Set<ClientStore> getClientStore() {
         return clientStore;
     }
 
@@ -59,7 +59,7 @@ public class Cart {
     public void setClientOnline(Set<ClientOnline> clientOnline) {
         this.clientOnline = clientOnline;
     }
-
+*/
     public Set<CartDetails> getCartDetails() {
         return cartDetails;
     }
@@ -68,5 +68,11 @@ public class Cart {
         this.cartDetails = cartDetails;
     }
 
-
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cartID=" + cartID +
+                ", cartDetails=" + cartDetails +
+                '}';
+    }
 }

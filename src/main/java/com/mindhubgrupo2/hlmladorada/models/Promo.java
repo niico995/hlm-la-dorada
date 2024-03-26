@@ -16,7 +16,9 @@ public class Promo {
     private Set<Integer> promos = new HashSet<>();
 
     //@ManyToOne(fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="promos")
     private Product product;
 
     public Promo() {

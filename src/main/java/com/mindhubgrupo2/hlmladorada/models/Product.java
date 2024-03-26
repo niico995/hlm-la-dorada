@@ -21,9 +21,8 @@ public class Product {
     private String name,details, brand, category;
 
     //@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="promoID")
-    Set<Promo> promos = new HashSet<>();
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private Set<Promo> promos = new HashSet<>();
 
     //private int providerID; To be done when the ecommerce is finished
 

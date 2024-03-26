@@ -17,9 +17,20 @@ public class CartDetails {
 
     private double amount;
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
-    private Set<Cart> cart = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "cart_cartdetails",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "cartdetails_id"))
+    private Set<Cart> carts = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "CartDetails{" +
+                "cuantity=" + cuantity +
+                ", amount=" + amount +
+                ", products=" + products +
+                '}';
+    }
 
     @ManyToMany
     @JoinTable(name = "cart_details_product",
@@ -61,11 +72,11 @@ public class CartDetails {
     }
 
     public Set<Cart> getCart() {
-        return cart;
+        return carts;
     }
 
     public void setCart(Set<Cart> cart) {
-        this.cart = cart;
+        this.carts = cart;
     }
 
     public Set<Product> getProducts() {

@@ -2,6 +2,7 @@ package com.mindhubgrupo2.hlmladorada.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,6 +24,9 @@ public class ClientStore {
 
     @OneToOne(mappedBy = "ClientStoreHolder", fetch = FetchType.EAGER)
     private ClientDoubuts doubut;
+
+    @OneToMany(mappedBy = "ClientStore", fetch = FetchType.EAGER)
+    private Set<Cart> carts = new HashSet<>();
 
     public ClientStore() {
     }
@@ -87,6 +91,19 @@ public class ClientStore {
         this.doubut = doubut;
     }
 
+    public Set<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
+    }
+
+    public void addCart(Cart cart) {
+        cart.setClientOnline(this);
+        carts.add(cart);
+    }
+
     @Override
     public String toString() {
         return "ClientStore{" +
@@ -97,6 +114,7 @@ public class ClientStore {
                 ", rut='" + rut + '\'' +
                 ", balance=" + balance +
                 ", doubuts=" + doubut +
+                ", carts=" + carts +
                 '}';
     }
 }

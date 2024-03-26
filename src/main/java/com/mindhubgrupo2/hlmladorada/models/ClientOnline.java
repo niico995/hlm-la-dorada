@@ -22,7 +22,7 @@ public class ClientOnline {
 
     private Double balance;
 
-    @OneToMany(mappedBy = "cartHolder", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "clientOnline", fetch = FetchType.EAGER)
     private Set<Cart> carts = new HashSet<>();
 
     public ClientOnline() {
@@ -88,8 +88,8 @@ public class ClientOnline {
         this.carts = carts;
     }
 
-    public void addSale(Cart cart) {
-        cart.setCartHolder(this);
+    public void addCart(Cart cart) {
+        cart.setClientOnline(this);
         carts.add(cart);
     }
 

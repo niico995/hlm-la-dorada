@@ -1,5 +1,6 @@
 package com.mindhubgrupo2.hlmladorada;
 
+
 import com.mindhubgrupo2.hlmladorada.Repositories.CartDetalsRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.CartRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.ProductRepository;
@@ -8,19 +9,22 @@ import com.mindhubgrupo2.hlmladorada.models.Cart;
 import com.mindhubgrupo2.hlmladorada.models.CartDetails;
 import com.mindhubgrupo2.hlmladorada.models.Product;
 import com.mindhubgrupo2.hlmladorada.models.Promo;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+
 import java.util.Set;
+
 
 @SpringBootApplication
 public class HlmladoradaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HlmladoradaApplication.class, args);
-	}
+	
 
 
 	@Bean
@@ -53,6 +57,7 @@ public class HlmladoradaApplication {
 			System.out.println(cart1);
 			System.out.println("*******");
 			System.out.println(cartFinal);
+
 
 		};
 	}

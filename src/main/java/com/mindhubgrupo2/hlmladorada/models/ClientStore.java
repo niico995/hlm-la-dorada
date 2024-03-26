@@ -33,7 +33,6 @@ public class ClientStore {
         this.phone = phone;
         this.rut = rut;
         this.balance = balance;
-        this.doubuts = doubuts;
     }
 
     public Long getClientStoreID() {
@@ -80,12 +79,12 @@ public class ClientStore {
         this.balance = balance;
     }
 
-    public Set<ClientDoubuts> getDoubuts() {
-        return doubuts;
+    public ClientDoubuts getDoubut() {
+        return doubut;
     }
 
-    public void setDobouts(Set<ClientDoubuts> doubuts) {
-        this.doubuts = doubuts;
+    public void setDoubut(ClientDoubuts doubut) {
+        this.doubut = doubut;
     }
 
     @Override
@@ -97,7 +96,7 @@ public class ClientStore {
                 ", phone='" + phone + '\'' +
                 ", rut='" + rut + '\'' +
                 ", balance=" + balance +
-                ", doubuts=" + doubuts +
+                ", doubuts=" + doubut +
                 '}';
     }
 }

@@ -12,7 +12,7 @@ public class Sales {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int salesID;
+    private Long salesID;
 
     private String details;
 
@@ -46,7 +46,7 @@ public class Sales {
         this.cartHolder = carts;
     }
 
-    public int getSalesID() {
+    public Long getSalesID() {
         return salesID;
     }
 

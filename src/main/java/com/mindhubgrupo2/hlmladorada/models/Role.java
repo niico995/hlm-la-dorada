@@ -1,9 +1,11 @@
 package com.mindhubgrupo2.hlmladorada.models;
 
-public enum Rol {
-    EMPLEADO,
+public enum Role {
+    EMPLOYEE,
+
+    USER,
 
     ADMIN,
 
-    DESARROLLADOR
+    DEVELOPER
 }

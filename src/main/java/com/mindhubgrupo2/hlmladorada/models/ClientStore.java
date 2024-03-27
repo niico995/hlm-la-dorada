@@ -18,6 +18,8 @@ public class ClientStore {
 
     private String phone;
 
+    private String role = "USER";
+
     private String rut;
 
     private Double balance;
@@ -85,6 +87,14 @@ public class ClientStore {
 
     public ClientDoubuts getDoubut() {
         return doubut;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void setDoubut(ClientDoubuts doubut) {

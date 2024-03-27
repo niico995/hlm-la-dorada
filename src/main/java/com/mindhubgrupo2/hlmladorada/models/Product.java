@@ -21,8 +21,9 @@ public class Product {
     private String name,details, brand, category;
 
     //@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    private Set<Promo> promos = new HashSet<>();
+    @ElementCollection
+    @Column(name="promos")
+    private Set<Integer> promos = new HashSet<>();
 
     //private int providerID; To be done when the ecommerce is finished
 
@@ -41,7 +42,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name,int stock, double cost, double finalPrice, double revenue, String details, String brand, String category) {
+    public Product(String name,int stock, double cost, double finalPrice, double revenue, String details, String brand, String category, Set<Integer> promos) {
         this.name = name;
         this.stock = stock;
         this.cost = cost;
@@ -50,6 +51,7 @@ public class Product {
         this.details = details;
         this.brand = brand;
         this.category = category;
+        this.promos = promos;
     }
 
     public String getName() {
@@ -120,18 +122,18 @@ public class Product {
         this.category = category;
     }
 
-    public Set<Promo> getPromos() {
+    public Set<Integer> getPromos() {
         return promos;
     }
 
-    public void setPromos(Set<Promo> promos) {
+    public void setPromos(Set<Integer> promos) {
         this.promos = promos;
     }
 
-    public void addPromo(Promo promo){
+/*    public void addPromo(Promo promo){
         promo.setProduct(this);
         promos.add(promo);
-    }
+    }*/
 
     public Set<CartDetails> getCartDetails() {
         return cartDetails;

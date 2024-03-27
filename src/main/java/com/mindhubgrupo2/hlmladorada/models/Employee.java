@@ -1,3 +1,4 @@
+/*
 package com.mindhubgrupo2.hlmladorada.models;
 
 
@@ -98,10 +99,12 @@ public class Employee {
         this.sales = sales;
     }
 
-    public void addSale(Sales sale) {
+    */
+/*public void addSale(Sales sale) {
         sale.setEmployeeHolder(this);
         sales.add(sale);
-    }
+    }*//*
+
 
     @Override
     public String toString() {
@@ -117,3 +120,4 @@ public class Employee {
                 '}';
     }
 }
+*/

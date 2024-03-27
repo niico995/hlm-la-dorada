@@ -17,10 +17,10 @@ public class Promo {
 
     //@ManyToOne(fetch = FetchType.EAGER)
 
-    @ManyToOne(fetch = FetchType.EAGER)
+   /* @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="promos")
     private Product product;
-
+*/
     public Promo() {
     }
 
@@ -36,14 +36,14 @@ public class Promo {
         this.promos = promos;
     }
 
-    public Product getProduct() {
+   /* public Product getProduct() {
         return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
     }
-
+*/
     @Override
     public String toString() {
         return "Promo{" +

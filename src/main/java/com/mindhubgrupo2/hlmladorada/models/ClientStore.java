@@ -25,13 +25,13 @@ public class ClientStore {
     @OneToOne(mappedBy = "ClientStoreHolder", fetch = FetchType.EAGER)
     private ClientDoubuts doubut;
 
-    @OneToMany(mappedBy = "ClientStore", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "clientStore", fetch = FetchType.EAGER)
     private Set<Cart> carts = new HashSet<>();
 
     public ClientStore() {
     }
 
-    public ClientStore(String name, String lastName, String phone, String rut, Double balance, Set<ClientDoubuts> doubuts) {
+    public ClientStore(String name, String lastName, String phone, String rut, Double balance) {
         this.name = name;
         this.lastName = lastName;
         this.phone = phone;
@@ -100,7 +100,7 @@ public class ClientStore {
     }
 
     public void addCart(Cart cart) {
-        cart.setClientOnline(this);
+        cart.setClientStore(this);
         carts.add(cart);
     }
 

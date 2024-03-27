@@ -11,6 +11,12 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartID;
+
+
+    private double finalAmount ;
+
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientStCart")
     private ClientStore clientStore;
@@ -40,7 +46,13 @@ public class Cart {
     }
 
 
+    public double getFinalAmount() {
+        return finalAmount;
+    }
 
+    public void setFinalAmount(double finalAmount) {
+        this.finalAmount = finalAmount;
+    }
 
     public int getCartID() {
         return cartID;

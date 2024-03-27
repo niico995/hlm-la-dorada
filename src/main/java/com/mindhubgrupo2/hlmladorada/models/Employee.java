@@ -1,4 +1,4 @@
-/*
+
 package com.mindhubgrupo2.hlmladorada.models;
 
 
@@ -22,7 +22,7 @@ public class Employee {
 
     private String password;
 
-    private Rol rol;
+    private Role role;
 
     private WorkPosition workPosition;
 
@@ -30,12 +30,12 @@ public class Employee {
     private Set<Sales> sales = new HashSet<>();
 
     public Employee() {};
-    public Employee(String name, String lastName, String email, String password, Rol rol, WorkPosition workPosition) {
+    public Employee(String name, String lastName, String email, String password, Role role, WorkPosition workPosition) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.rol = rol;
+        this.role = role;
         this.workPosition = workPosition;
     }
 
@@ -75,12 +75,12 @@ public class Employee {
         this.password = password;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public WorkPosition getWorkPosition() {
@@ -99,11 +99,10 @@ public class Employee {
         this.sales = sales;
     }
 
-    */
-/*public void addSale(Sales sale) {
+    public void addSale(Sales sale) {
         sale.setEmployeeHolder(this);
         sales.add(sale);
-    }*//*
+    }
 
 
     @Override
@@ -114,10 +113,10 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", rol=" + rol +
+                ", role=" + role +
                 ", workPosition=" + workPosition +
                 ", sales=" + sales +
                 '}';
     }
 }
-*/
+

@@ -1,4 +1,3 @@
-/*
 package com.mindhubgrupo2.hlmladorada.Repositories;
 
 import com.mindhubgrupo2.hlmladorada.models.Employee;
@@ -12,4 +11,3 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Employee findByEmail(String email);
 }
-*/

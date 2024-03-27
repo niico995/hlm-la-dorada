@@ -18,9 +18,11 @@ public class ClientOnline {
 
     private String email;
 
+    private String role = "USER";
+
     private String password;
 
-    private Double balance;
+    private Double balance = 0.00;
 
     @OneToMany(mappedBy = "clientOnline", fetch = FetchType.EAGER)
     private Set<Cart> carts = new HashSet<>();
@@ -28,12 +30,11 @@ public class ClientOnline {
     public ClientOnline() {
     }
 
-    public ClientOnline(String name, String lastName, String email, String password, Double balance) {
+    public ClientOnline(String name, String lastName, String email, String password) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.balance = balance;
     }
 
     public Long getClientOnlineID() {
@@ -78,6 +79,14 @@ public class ClientOnline {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Set<Cart> getCarts() {

@@ -99,6 +99,7 @@ public class Employee {
         this.sales = sales;
     }
 
+
     public void addSale(Sales sale) {
         sale.setEmployeeHolder(this);
         sales.add(sale);

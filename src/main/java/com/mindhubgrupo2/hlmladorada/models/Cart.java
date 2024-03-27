@@ -28,15 +28,17 @@ public class Cart {
         cartDetails.add(cartDetail);
     }
 
+    @OneToMany(mappedBy = "cartHolder")
+    private Set<Sales> sales = new HashSet<>();
+
+    public void addSales(Sales sale){
+        sale.setCart(this);
+        sales.add(sale);
+    }
 
     public Cart() {
     }
 
-    /*public Cart(Set<ClientStore> clientStore, Set<ClientOnline> clientOnline, Set<CartDetails> cartDetails) {
-        this.clientStore = clientStore;
-        this.clientOnline = clientOnline;
-        this.cartDetails = cartDetails;
-    }*/
 
 
 

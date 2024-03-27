@@ -1,5 +1,6 @@
 package com.mindhubgrupo2.hlmladorada.securityServices;
 
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -64,3 +65,4 @@ public class JwtUtilService {
                 .compact();
     }
 }
+

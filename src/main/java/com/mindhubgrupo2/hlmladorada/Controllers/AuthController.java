@@ -1,4 +1,4 @@
-package com.mindhubgrupo2.hlmladorada.Controllers;
+package com.mindhubgrupo2.hlmladorada.controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.LoginDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RegisterDTO;
@@ -117,7 +117,9 @@ public class AuthController {
     }
 
     @PostMapping("/register/employee")
+
     public ResponseEntity<?> registerEmployee(@RequestBody RegisterEmployeeDTO registerEmployeeDTO) {
+
 
         if(registerEmployeeDTO.firstName().isBlank()) {
             return new ResponseEntity<>("The name field must not be empty " , HttpStatus.FORBIDDEN);

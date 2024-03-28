@@ -11,6 +11,8 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartID;
+
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientStCart")
     private ClientStore clientStoreHolder;
@@ -37,6 +39,7 @@ public class Cart {
 
     public Cart() {
     }
+
 
     public int getCartID() {
         return cartID;

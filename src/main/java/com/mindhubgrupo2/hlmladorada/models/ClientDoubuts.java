@@ -19,7 +19,7 @@ public class ClientDoubuts {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ClientStore_ID")
-    private ClientStore ClientStoreHolder;
+    private ClientStore clientStoreHolder;
 
     public ClientDoubuts() {
     }
@@ -59,11 +59,11 @@ public class ClientDoubuts {
     }
 
     public ClientStore getClientStoreHolder() {
-        return ClientStoreHolder;
+        return clientStoreHolder;
     }
 
-    public void setClientStoreHolder(ClientStore clientStoreHolder) {
-        ClientStoreHolder = clientStoreHolder;
+    public void setClientStoreHolder(ClientStore clientStore) {
+        clientStoreHolder = clientStore;
     }
 
     @Override

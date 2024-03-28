@@ -2,10 +2,7 @@ package com.mindhubgrupo2.hlmladorada.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Purchase {
@@ -14,41 +11,35 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long purchaseID;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "purcheseProviderHolder")
-    private Provider providerHolder;
-
-
     private int quantity;
 
     private String details;
 
-    private double unitCost, finalCost;
+    private LocalDateTime date;
 
-    private LocalDateTime purchaseDate;
+    private Double unitCost;
 
+    private Double totalCost;
 
-    private Set<Product> products = new HashSet<>();
+    @OneToOne(mappedBy = "purchaseHolder")
+    private Product productHolder;
 
+    @OneToOne(mappedBy = "purchaseHolder")
+    private Provider providerHolder;
 
     public Purchase() {
     }
 
-    public Purchase(int quantity, String details, double unitCost, double finalCost, LocalDateTime purchaseDate) {
+    public Purchase(int quantity, String details, LocalDateTime date, Double unitCost, Double totalCost) {
         this.quantity = quantity;
         this.details = details;
+        this.date = date;
         this.unitCost = unitCost;
-        this.finalCost = finalCost;
-        this.purchaseDate = purchaseDate;
+        this.totalCost = totalCost;
     }
 
-    public Provider getProviderHolder() {
-        return providerHolder;
-    }
-
-    public void setProviderHolder(Provider providerHolder) {
-        this.providerHolder = providerHolder;
+    public Long getPurchaseID() {
+        return purchaseID;
     }
 
     public int getQuantity() {
@@ -67,27 +58,55 @@ public class Purchase {
         this.details = details;
     }
 
-    public double getUnitCost() {
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public Double getUnitCost() {
         return unitCost;
     }
 
-    public void setUnitCost(double unitCost) {
+    public void setUnitCost(Double unitCost) {
         this.unitCost = unitCost;
     }
 
-    public double getFinalCost() {
-        return finalCost;
+    public Double getTotalCost() {
+        return totalCost;
     }
 
-    public void setFinalCost(double finalCost) {
-        this.finalCost = finalCost;
+    public void setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
     }
 
-    public LocalDateTime getPurchaseDate() {
-        return purchaseDate;
+    public Product getProductHolder() {
+        return productHolder;
     }
 
-    public void setPurchaseDate(LocalDateTime purchaseDate) {
-        this.purchaseDate = purchaseDate;
+    public void setProductHolder(Product productHolder) {
+        this.productHolder = productHolder;
+    }
+
+    public Provider getProviderHolder() {
+        return providerHolder;
+    }
+
+    public void setProviderHolder(Provider providerHolder) {
+        this.providerHolder = providerHolder;
+    }
+
+    @Override
+    public String toString() {
+        return "Purchase{" +
+                "purchaseID=" + purchaseID +
+                ", quantity=" + quantity +
+                ", details='" + details + '\'' +
+                ", date=" + date +
+                ", unitCost=" + unitCost +
+                ", totalCost=" + totalCost +
+                '}';
     }
 }

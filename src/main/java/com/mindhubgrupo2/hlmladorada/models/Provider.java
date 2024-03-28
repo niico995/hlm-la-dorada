@@ -1,10 +1,6 @@
 package com.mindhubgrupo2.hlmladorada.models;
 
-
 import jakarta.persistence.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Provider {
@@ -13,24 +9,34 @@ public class Provider {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long providerID;
 
-    private String phone, email, adress, cuit;
+    private String name;
 
+    private String phone;
 
-    @OneToMany(mappedBy = "providerHolder")
-    private Set<Purchase> purchases = new HashSet<>();
+    private String email;
 
+    private String ruc;
 
-    public void addPurchase(Purchase purchase){
-        purchase.setProviderHolder(this);
-        purchases.add(purchase);
+    private String adress;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PurchaseProvider")
+    private Purchase purchaseHolder;
+
+    public Provider() {
     }
 
+    public Long getProviderID() {
+        return providerID;
+    }
 
-    @ManyToMany
-    @JoinTable(name = "providerProducts",
-            joinColumns = @JoinColumn(name = "providerProductID"),
-            inverseJoinColumns = @JoinColumn(name = "productsOfProviders"))
-    private Set<Product> products = new HashSet<>();
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getPhone() {
         return phone;
@@ -48,6 +54,14 @@ public class Provider {
         this.email = email;
     }
 
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
     public String getAdress() {
         return adress;
     }
@@ -56,39 +70,29 @@ public class Provider {
         this.adress = adress;
     }
 
-    public String getCuit() {
-        return cuit;
+    public Purchase getPurchaseHolder() {
+        return purchaseHolder;
     }
 
-    public void setCuit(String cuit) {
-        this.cuit = cuit;
+    public void setPurchaseHolder(Purchase purchaseHolder) {
+        this.purchaseHolder = purchaseHolder;
     }
 
-    public Set<Purchase> getPurchases() {
-        return purchases;
-    }
-
-    public void setPurchases(Set<Purchase> purchases) {
-        this.purchases = purchases;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void addPurchase(Purchase purchase) {
+        purchase.setProviderHolder(this);
+        this.setPurchaseHolder(purchase);
     }
 
     @Override
     public String toString() {
         return "Provider{" +
                 "providerID=" + providerID +
+                ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
+                ", ruc='" + ruc + '\'' +
                 ", adress='" + adress + '\'' +
-                ", cuit='" + cuit + '\'' +
-                ", purchases=" + purchases +
+                ", purchaseHolder=" + purchaseHolder +
                 '}';
     }
 }

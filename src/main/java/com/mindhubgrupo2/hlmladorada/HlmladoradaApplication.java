@@ -57,7 +57,7 @@ public class HlmladoradaApplication {
 				cartFinal.addCartDetails(cart3);
 
 
-				cartFinal.setFinalAmount(cart1.getAmount()+cart2.getAmount()+cart3.getAmount());
+				//cartFinal.setFinalAmount(cart1.getAmount()+cart2.getAmount()+cart3.getAmount());
 
 				//cartRepository.save(cartFinal);
 
@@ -69,10 +69,12 @@ public class HlmladoradaApplication {
 				//Promo promos = new Promo(Set.of(0, 10, 15, 20));
 				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now(),"Probando deudas");
 
-				ClientStore clientStore1 = new ClientStore("Cosme","Fulanito","+5401169993331","15123987",150.00);
+
+				ClientStore clientStore1 = new ClientStore("Cosme","Fulanito","+5401169993331","15123987");
+
 				ClientOnline clientOnline1 = new ClientOnline("Orlando","Contreras","mail@prueba","prueba123");
 
-				clientStore1.setDoubut(dobouts1);
+				clientStore1.setDoubutHolder(dobouts1);
 
 
 				clientDoubutsRepository.save(dobouts1);
@@ -83,14 +85,15 @@ public class HlmladoradaApplication {
 
 
 
-				double finalWithTaxes = cartFinal.getFinalAmount() * 1.105 ;
+				double finalWithTaxes = cart1.getAmount() + cart2.getAmount() + cart3.getAmount();
 
-				Sales ventaTest = new Sales("Our first sale",finalWithTaxes, List.of("credit card"),List.of(10.5),tiendita,cartFinal);
+				//Sales ventaTest = new Sales("Our first sale",finalWithTaxes, List.of("credit card"),List.of(10.5),tiendita,cartFinal);
+				Sales ventaTest = new Sales("Probando venta",finalWithTaxes,List.of("Credit"),List.of(10.5));
 				tiendita.addSale(ventaTest);
 				employeeRepository.save(tiendita);
-				cartFinal.addSales(ventaTest);
-				cartRepository.save(cartFinal);
 				salesRepository.save(ventaTest);
+				cartFinal.addSale(ventaTest);
+				cartRepository.save(cartFinal);
 
 
 

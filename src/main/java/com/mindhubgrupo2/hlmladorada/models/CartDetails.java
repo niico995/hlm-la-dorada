@@ -13,7 +13,7 @@ public class CartDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartDetailsID;
 
-    private int cuantity;
+    private int quantity;
 
     private double amount;
 
@@ -22,15 +22,6 @@ public class CartDetails {
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "cartdetails_id"))
     private Set<Cart> carts = new HashSet<>();
-
-    @Override
-    public String toString() {
-        return "CartDetails{" +
-                "cuantity=" + cuantity +
-                ", amount=" + amount +
-                ", products=" + products +
-                '}';
-    }
 
     @ManyToMany
     @JoinTable(name = "cart_details_product",
@@ -47,7 +38,7 @@ public class CartDetails {
     }
 
     public CartDetails(int cuantity, double amount) {
-        this.cuantity = cuantity;
+        this.quantity = cuantity;
         this.amount = amount;
     }
 
@@ -55,12 +46,12 @@ public class CartDetails {
         return cartDetailsID;
     }
 
-    public int getCuantity() {
-        return cuantity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCuantity(int cuantity) {
-        this.cuantity = cuantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getAmount() {
@@ -85,5 +76,15 @@ public class CartDetails {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "CartDetails{" +
+                "cartDetailsID=" + cartDetailsID +
+                ", quantity=" + quantity +
+                ", amount=" + amount +
+                ", products=" + products +
+                '}';
     }
 }

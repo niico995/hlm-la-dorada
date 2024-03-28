@@ -48,16 +48,18 @@ public class HlmladoradaApplication {
 
 				Cart cartFinal = new Cart();
 
-				cartFinal.addCartDetails(cart1);
-				cartFinal.addCartDetails(cart2);
-				cartFinal.addCartDetails(cart3);
 				cartDetalsRepository.save(cart1);
 				cartDetalsRepository.save(cart2);
 				cartDetalsRepository.save(cart3);
 
+				cartFinal.addCartDetails(cart1);
+				cartFinal.addCartDetails(cart2);
+				cartFinal.addCartDetails(cart3);
+
+
 				cartFinal.setFinalAmount(cart1.getAmount()+cart2.getAmount()+cart3.getAmount());
 
-				cartRepository.save(cartFinal);
+				//cartRepository.save(cartFinal);
 
 
 				System.out.println(cart1);
@@ -81,12 +83,15 @@ public class HlmladoradaApplication {
 
 
 
+				double finalWithTaxes = cartFinal.getFinalAmount() * 1.105 ;
 
-				Sales ventaTest = new Sales("Our first sale",amount, List.of("credit card"),List.of(10.5),tiendita,cartFinal);
-				salesRepository.save(ventaTest);
+				Sales ventaTest = new Sales("Our first sale",finalWithTaxes, List.of("credit card"),List.of(10.5),tiendita,cartFinal);
+				tiendita.addSale(ventaTest);
 				employeeRepository.save(tiendita);
 				cartFinal.addSales(ventaTest);
 				cartRepository.save(cartFinal);
+				salesRepository.save(ventaTest);
+
 
 
 				System.out.println(clientStore1);

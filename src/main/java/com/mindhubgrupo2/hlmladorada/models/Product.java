@@ -25,7 +25,21 @@ public class Product {
     @Column(name="promos")
     private Set<Integer> promos = new HashSet<>();
 
-    //private int providerID; To be done when the ecommerce is finished
+    @ManyToMany(mappedBy = "providerID")
+    private Set<Provider> providerHolder = new HashSet<>();
+
+    public Set<Provider> getProviderID() {
+        return providerHolder;
+    }
+
+    public void setProviderID(Set<Provider> providerID) {
+        this.providerHolder = providerID;
+    }
+
+    public void addProvider(Provider provider){
+        provider.getProducts().add(this);
+        providerHolder.add(provider);
+    }
 
 
     @ManyToMany(mappedBy = "products")
@@ -155,6 +169,7 @@ public class Product {
                 ", brand='" + brand + '\'' +
                 ", category='" + category + '\'' +
                 ", promos=" + promos +
+                ", provider=" + providerHolder + '\'' +
                 '}';
     }
 }

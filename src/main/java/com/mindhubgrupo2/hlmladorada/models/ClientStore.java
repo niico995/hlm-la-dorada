@@ -22,23 +22,22 @@ public class ClientStore {
 
     private String rut;
 
-    private Double balance;
+    private Double balance = 0.00;
 
-    @OneToOne(mappedBy = "ClientStoreHolder", fetch = FetchType.EAGER)
-    private ClientDoubuts doubut;
+    @OneToOne(mappedBy = "clientStoreHolder", fetch = FetchType.EAGER)
+    private ClientDoubuts doubutHolder;
 
-    @OneToMany(mappedBy = "clientStore", fetch = FetchType.EAGER)
-    private Set<Cart> carts = new HashSet<>();
+    @OneToOne(mappedBy = "clientStoreHolder", fetch = FetchType.EAGER)
+    private Cart cartHolder;
 
     public ClientStore() {
     }
 
-    public ClientStore(String name, String lastName, String phone, String rut, Double balance) {
+    public ClientStore(String name, String lastName, String phone, String rut) {
         this.name = name;
         this.lastName = lastName;
         this.phone = phone;
         this.rut = rut;
-        this.balance = balance;
     }
 
     public Long getClientStoreID() {
@@ -85,8 +84,8 @@ public class ClientStore {
         this.balance = balance;
     }
 
-    public ClientDoubuts getDoubut() {
-        return doubut;
+    public ClientDoubuts getDoubutHolder() {
+        return doubutHolder;
     }
 
     public String getRole() {
@@ -97,21 +96,28 @@ public class ClientStore {
         this.role = role;
     }
 
-    public void setDoubut(ClientDoubuts doubut) {
-        this.doubut = doubut;
+    public void setDoubutHolder(ClientDoubuts doubut) {
+        this.doubutHolder = doubut;
     }
 
-    public Set<Cart> getCarts() {
-        return carts;
+    public Cart getCartHolder() {
+        return cartHolder;
     }
 
-    public void setCarts(Set<Cart> carts) {
-        this.carts = carts;
+    public void setCartHolder(Cart cart) {
+        this.cartHolder = cart;
     }
+
+
 
     public void addCart(Cart cart) {
         cart.setClientStore(this);
-        carts.add(cart);
+        this.setCartHolder(cart);
+    }
+
+    public void addClientDoubuts(ClientDoubuts clientDoubuts) {
+        clientDoubuts.setClientStoreHolder(this);
+        this.setDoubutHolder(clientDoubuts);
     }
 
     @Override
@@ -123,8 +129,8 @@ public class ClientStore {
                 ", phone='" + phone + '\'' +
                 ", rut='" + rut + '\'' +
                 ", balance=" + balance +
-                ", doubuts=" + doubut +
-                ", carts=" + carts +
+                ", doubutHolder=" + doubutHolder +
+                ", cartHolder=" + cartHolder +
                 '}';
     }
 }

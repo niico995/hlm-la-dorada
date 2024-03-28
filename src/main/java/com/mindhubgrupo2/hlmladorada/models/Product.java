@@ -36,9 +36,6 @@ public class Product {
         this.cartDetails.add(cartDetail);
     }
 
-
-
-
     public Product() {
     }
 

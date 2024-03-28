@@ -116,7 +116,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/employee")
-    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
+    public ResponseEntity<?> registerEmployee(@RequestBody RegisterDTO registerDTO) {
 
         if(registerDTO.firstName().isBlank()) {
             return new ResponseEntity<>("The name field must not be empty " , HttpStatus.FORBIDDEN);

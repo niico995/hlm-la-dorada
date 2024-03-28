@@ -11,55 +11,51 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartID;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientStCart")
-    private ClientStore clientStore;
+    private ClientStore clientStoreHolder;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientOnCart")
-    private ClientOnline clientOnline;
+    private ClientOnline clientOnlineHolder;
 
-    @ManyToMany(mappedBy = "carts", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="cartHolder", fetch = FetchType.EAGER)
     private Set<CartDetails> cartDetails = new HashSet<>();
 
     public void addCartDetails(CartDetails cartDetail){
-        cartDetail.getCart().add(this);
+        cartDetail.setCartHolder(this);
         cartDetails.add(cartDetail);
     }
 
-    @OneToMany(mappedBy = "cartHolder")
-    private Set<Sales> sales = new HashSet<>();
+    @OneToOne(mappedBy = "cartHolder")
+    private Sales salesHolder;
 
-    public void addSales(Sales sale){
-        sale.setCart(this);
-        sales.add(sale);
+    public void addSale(Sales sale){
+        sale.setCartHolder(this);
+        this.setSalesHolder(sale);
     }
 
     public Cart() {
     }
 
-
-
-
     public int getCartID() {
         return cartID;
     }
 
-    public ClientStore getClientStore() {
-        return clientStore;
+    public ClientStore getClientStoreHolder() {
+        return clientStoreHolder;
     }
 
     public void setClientStore(ClientStore clientStore) {
-        this.clientStore = clientStore;
+        this.clientStoreHolder = clientStore;
     }
 
-    public ClientOnline getClientOnline() {
-        return clientOnline;
+    public ClientOnline getClientOnlineHolder() {
+        return clientOnlineHolder;
     }
 
-    public void setClientOnline(ClientOnline clientOnline) {
-        this.clientOnline = clientOnline;
+    public void setClientOnlineHolder(ClientOnline clientOnline) {
+        this.clientOnlineHolder = clientOnline;
     }
 
     public Set<CartDetails> getCartDetails() {
@@ -68,6 +64,18 @@ public class Cart {
 
     public void setCartDetails(Set<CartDetails> cartDetails) {
         this.cartDetails = cartDetails;
+    }
+
+    public void setClientStoreHolder(ClientStore clientStoreHolder) {
+        this.clientStoreHolder = clientStoreHolder;
+    }
+
+    public Sales getSalesHolder() {
+        return salesHolder;
+    }
+
+    public void setSalesHolder(Sales salesHolder) {
+        this.salesHolder = salesHolder;
     }
 
     @Override

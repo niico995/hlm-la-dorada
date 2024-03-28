@@ -57,10 +57,10 @@ public class HlmladoradaApplication {
 				//Promo promos = new Promo(Set.of(0, 10, 15, 20));
 				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now(),"Probando deudas");
 
-				ClientStore clientStore1 = new ClientStore("Cosme","Fulanito","+5401169993331","15123987",150.00);
-				ClientOnline clientOnline1 = new ClientOnline("Orlando","Contreras","mail@prueba","prueba123",150.00);
+				ClientStore clientStore1 = new ClientStore("Cosme","Fulanito","+5401169993331","15123987");
+				ClientOnline clientOnline1 = new ClientOnline("Orlando","Contreras","mail@prueba","prueba123");
 
-				clientStore1.setDoubut(dobouts1);
+				clientStore1.setDoubutHolder(dobouts1);
 
 
 				clientDoubutsRepository.save(dobouts1);

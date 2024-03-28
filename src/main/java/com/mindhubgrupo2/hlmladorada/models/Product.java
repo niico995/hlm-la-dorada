@@ -20,7 +20,10 @@ public class Product {
 
     private String name,details, brand, category;
 
-    //@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PurchaseProduct")
+    private Purchase purchaseHolder;
+
     @ElementCollection
     @Column(name="promos")
     private Set<Integer> promos = new HashSet<>();
@@ -35,9 +38,6 @@ public class Product {
         cartDetail.getProducts().add(this);
         this.cartDetails.add(cartDetail);
     }
-
-
-
 
     public Product() {
     }
@@ -143,6 +143,19 @@ public class Product {
         this.cartDetails = cartDetails;
     }
 
+    public Purchase getPurchaseHolder() {
+        return purchaseHolder;
+    }
+
+    public void setPurchaseHolder(Purchase purchaseHolder) {
+        this.purchaseHolder = purchaseHolder;
+    }
+
+    public void addPurchase(Purchase purchase) {
+        purchase.setProductHolder(this);
+        this.setPurchaseHolder(purchase);
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -155,6 +168,7 @@ public class Product {
                 ", brand='" + brand + '\'' +
                 ", category='" + category + '\'' +
                 ", promos=" + promos +
+                ", purchaseHolder=" + purchaseHolder +
                 '}';
     }
 }

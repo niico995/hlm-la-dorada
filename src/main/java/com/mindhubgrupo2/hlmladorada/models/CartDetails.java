@@ -13,24 +13,13 @@ public class CartDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartDetailsID;
 
-    private int cuantity;
+    private int quantity;
 
     private double amount;
 
-    @ManyToMany
-    @JoinTable(name = "cart_cartdetails",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "cartdetails_id"))
-    private Set<Cart> carts = new HashSet<>();
-
-    @Override
-    public String toString() {
-        return "CartDetails{" +
-                "cuantity=" + cuantity +
-                ", amount=" + amount +
-                ", products=" + products +
-                '}';
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CartID")
+    private Cart cartHolder;
 
     @ManyToMany
     @JoinTable(name = "cart_details_product",
@@ -46,8 +35,8 @@ public class CartDetails {
     public CartDetails() {
     }
 
-    public CartDetails(int cuantity, double amount) {
-        this.cuantity = cuantity;
+    public CartDetails(int quantity, double amount) {
+        this.quantity = quantity;
         this.amount = amount;
     }
 
@@ -56,11 +45,11 @@ public class CartDetails {
     }
 
     public int getCuantity() {
-        return cuantity;
+        return quantity;
     }
 
     public void setCuantity(int cuantity) {
-        this.cuantity = cuantity;
+        this.quantity = cuantity;
     }
 
     public double getAmount() {
@@ -71,12 +60,12 @@ public class CartDetails {
         this.amount = amount;
     }
 
-    public Set<Cart> getCart() {
-        return carts;
+    public Cart getCartHolder() {
+        return cartHolder;
     }
 
-    public void setCart(Set<Cart> cart) {
-        this.carts = cart;
+    public void setCartHolder(Cart cartHolder) {
+        this.cartHolder = cartHolder;
     }
 
     public Set<Product> getProducts() {
@@ -85,5 +74,15 @@ public class CartDetails {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "CartDetails{" +
+                "cartDetailsID=" + cartDetailsID +
+                ", quantity=" + quantity +
+                ", amount=" + amount +
+                ", products=" + products +
+                '}';
     }
 }

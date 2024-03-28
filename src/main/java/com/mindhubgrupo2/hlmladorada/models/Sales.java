@@ -26,24 +26,18 @@ public class Sales {
     @JoinColumn(name = "employeeHolderID")
     private Employee employeeHolder;
 
-
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cartPurchase")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cartSale")
     private Cart cartHolder;
-
-
 
     public Sales() {
     }
 
-    public Sales(String details, double finalAmount, List<String> paidMethod, List<Double> taxes, Employee employeeHolder, Cart carts) {
+    public Sales(String details, double finalAmount, List<String> paidMethod, List<Double> taxes) {
         this.details = details;
         this.finalAmount = finalAmount;
         this.paidMethod = paidMethod;
         this.taxes = taxes;
-        this.employeeHolder = employeeHolder;
-        this.cartHolder = carts;
     }
 
     public Long getSalesID() {
@@ -90,12 +84,12 @@ public class Sales {
         this.employeeHolder = employeeHolder;
     }
 
-    public Cart getCart() {
+    public Cart getCartHolder() {
         return cartHolder;
     }
 
-    public void setCart(Cart carts) {
-        this.cartHolder = carts;
+    public void setCartHolder(Cart cart) {
+        this.cartHolder = cart;
     }
 
     @Override
@@ -106,7 +100,7 @@ public class Sales {
                 ", finalAmount=" + finalAmount +
                 ", paidMethod=" + paidMethod +
                 ", taxes=" + taxes +
-                ", carts=" + cartHolder +
+                ", cartHolder=" + cartHolder +
                 '}';
     }
 }

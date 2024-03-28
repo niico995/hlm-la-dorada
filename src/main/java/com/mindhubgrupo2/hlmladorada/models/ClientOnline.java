@@ -24,8 +24,8 @@ public class ClientOnline {
 
     private Double balance = 0.00;
 
-    @OneToMany(mappedBy = "clientOnline", fetch = FetchType.EAGER)
-    private Set<Cart> carts = new HashSet<>();
+    @OneToOne(mappedBy = "clientOnlineHolder", fetch = FetchType.EAGER)
+    private Cart cartHolder;
 
     public ClientOnline() {
     }
@@ -89,17 +89,17 @@ public class ClientOnline {
         this.role = role;
     }
 
-    public Set<Cart> getCarts() {
-        return carts;
+    public Cart getCartHolder() {
+        return cartHolder;
     }
 
-    public void setCart(Set<Cart> carts) {
-        this.carts = carts;
+    public void setCartHolder(Cart cartHolder) {
+        this.cartHolder = cartHolder;
     }
 
     public void addCart(Cart cart) {
-        cart.setClientOnline(this);
-        carts.add(cart);
+        cart.setClientOnlineHolder(this);
+        this.setCartHolder(cart);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class ClientOnline {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", balance=" + balance +
-                ", carts=" + carts +
+                ", cartHolder=" + cartHolder +
                 '}';
     }
 }

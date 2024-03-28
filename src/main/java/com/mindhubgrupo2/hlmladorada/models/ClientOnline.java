@@ -18,6 +18,10 @@ public class ClientOnline {
 
     private String email;
 
+    private String adress;
+
+    private String phone;
+
     private String role = "USER";
 
     private String password;
@@ -30,11 +34,13 @@ public class ClientOnline {
     public ClientOnline() {
     }
 
-    public ClientOnline(String name, String lastName, String email, String password) {
+    public ClientOnline(String name, String lastName, String email, String password, String phone, String adress) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.phone = phone;
+        this.adress = adress;
     }
 
     public Long getClientOnlineID() {
@@ -93,6 +99,22 @@ public class ClientOnline {
         return cartHolder;
     }
 
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public void setCartHolder(Cart cartHolder) {
         this.cartHolder = cartHolder;
     }
@@ -112,6 +134,8 @@ public class ClientOnline {
                 ", password='" + password + '\'' +
                 ", balance=" + balance +
                 ", cartHolder=" + cartHolder +
+                ", adress=" + adress +
+                ", phone=" + phone +
                 '}';
     }
 }

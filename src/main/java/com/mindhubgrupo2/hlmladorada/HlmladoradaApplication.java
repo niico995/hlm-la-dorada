@@ -70,9 +70,9 @@ public class HlmladoradaApplication {
 				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now(),"Probando deudas");
 
 
-				ClientStore clientStore1 = new ClientStore("Cosme","Fulanito","+5401169993331","15123987");
+				ClientStore clientStore1 = new ClientStore("Cosme","Fulanito","+5401169993331","15123987", "cosme@fulanito");
 
-				ClientOnline clientOnline1 = new ClientOnline("Orlando","Contreras","mail@prueba","prueba123");
+				ClientOnline clientOnline1 = new ClientOnline("Orlando","Contreras","mail@prueba","prueba123", "+351321456", "Orlando@Contreras");
 
 				clientStore1.setDoubutHolder(dobouts1);
 

@@ -16,6 +16,8 @@ public class ClientStore {
 
     private String lastName;
 
+    private String adress;
+
     private String phone;
 
     private String role = "USER";
@@ -33,9 +35,10 @@ public class ClientStore {
     public ClientStore() {
     }
 
-    public ClientStore(String name, String lastName, String phone, String rut) {
+    public ClientStore(String name, String lastName, String phone, String rut, String adress) {
         this.name = name;
         this.lastName = lastName;
+        this.adress = adress;
         this.phone = phone;
         this.rut = rut;
     }
@@ -108,7 +111,13 @@ public class ClientStore {
         this.cartHolder = cart;
     }
 
+    public String getAdress() {
+        return adress;
+    }
 
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
 
     public void addCart(Cart cart) {
         cart.setClientStore(this);
@@ -131,6 +140,7 @@ public class ClientStore {
                 ", balance=" + balance +
                 ", doubutHolder=" + doubutHolder +
                 ", cartHolder=" + cartHolder +
+                ", adress=" + adress +
                 '}';
     }
 }

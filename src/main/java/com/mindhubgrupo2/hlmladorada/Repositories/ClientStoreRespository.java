@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClientStoreRespository extends JpaRepository<ClientStore, Long> {
+    Boolean existsByRut(String rut);
    //Boolean existsByEmail(String email);
 
 //   ClientOnline findByEmail(String email);

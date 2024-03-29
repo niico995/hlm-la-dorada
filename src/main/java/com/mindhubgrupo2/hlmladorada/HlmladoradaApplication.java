@@ -21,17 +21,13 @@ public class HlmladoradaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HlmladoradaApplication.class, args);}
 
+	@Bean
+	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRespository clientStoreRespository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
 
-		@Bean
-		public CommandLineRunner initData (ProductRepository productRepository, PromoRepository
-		promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRepository clientStoreRepository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository,
-										   SalesRepository salesRepository){
 			return args -> {
 				Promo promos = new Promo(Set.of(0, 10, 15, 20));
 
-				Product product1 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia",Set.of(0, 10, 15, 20));
-
-				//product1.setPromos(promos);
+				Product product1 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
 
 				productRepository.save(product1);
 
@@ -40,66 +36,56 @@ public class HlmladoradaApplication {
 				int quantity = 2;
 				double amount = product1.getFinalPrice() * quantity;
 				CartDetails cart1 = new CartDetails(quantity, amount);
-				CartDetails cart2 = new CartDetails(quantity,amount);
-				CartDetails cart3 = new CartDetails(quantity,amount);
+				Cart cartFinal = new Cart();
 
 				cart1.addProducts(product1);
 
-				Cart cartFinal = new Cart();
-
 				cartDetalsRepository.save(cart1);
-				cartDetalsRepository.save(cart2);
-				cartDetalsRepository.save(cart3);
 
 				cartFinal.addCartDetails(cart1);
-				cartFinal.addCartDetails(cart2);
-				cartFinal.addCartDetails(cart3);
 
-
-				//cartFinal.setFinalAmount(cart1.getAmount()+cart2.getAmount()+cart3.getAmount());
-
-				//cartRepository.save(cartFinal);
-
+				cartRepository.save(cartFinal);
 
 				System.out.println(cart1);
-				System.out.println("*******");
 				System.out.println(cartFinal);
 
-				//Promo promos = new Promo(Set.of(0, 10, 15, 20));
-				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now().toString(),"Probando deudas");
 
+				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now().toString(), "Probando deudas");
 
-				ClientStore clientStore1 = new ClientStore("Cosme","Fulanito","+5401169993331","15123987", "cosme@fulanito");
-
-				ClientOnline clientOnline1 = new ClientOnline("Orlando","Contreras","mail@prueba","prueba123", "+351321456", "Orlando@Contreras");
+				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987");
 
 				clientStore1.setDoubutHolder(dobouts1);
-
 
 				clientDoubutsRepository.save(dobouts1);
 				clientStoreRepository.save(clientStore1);
 				dobouts1.setClientStoreHolder(clientStore1);
 				clientDoubutsRepository.save(dobouts1);
-				Employee tiendita = new Employee("Tienda","Online","nuestro@correo","tienda123",Role.EMPLOYEE,WorkPosition.ECOMMMERCE);
 
+				Employee tiendita = new Employee("Tienda", "Online", "nuestro@correo", "tienda123", Role.EMPLOYEE, WorkPosition.ECOMMMERCE);
 
+				double finalWithTaxes = cart1.getAmount() + cart1.getAmount() + cart1.getAmount() * 1.105;
 
-				double finalWithTaxes = cart1.getAmount() + cart2.getAmount() + cart3.getAmount();
+				Sales ventaTest = new Sales("Probando venta", finalWithTaxes, List.of("Credit"), List.of(10.5));
 
-				//Sales ventaTest = new Sales("Our first sale",finalWithTaxes, List.of("credit card"),List.of(10.5),tiendita,cartFinal);
-				Sales ventaTest = new Sales("Probando venta",finalWithTaxes,List.of("Credit"),List.of(10.5));
 				tiendita.addSale(ventaTest);
-				employeeRepository.save(tiendita);
-				salesRepository.save(ventaTest);
-				cartFinal.addSale(ventaTest);
-				cartRepository.save(cartFinal);
 
+				employeeRepository.save(tiendita);
+
+				ventaTest.setCartHolder(cartFinal);
+
+				salesRepository.save(ventaTest);
+
+				clientStore1.addCart(cartFinal);
+
+				clientStoreRespository.save(clientStore1);
+
+				cartRepository.save(cartFinal);
 
 
 				System.out.println(clientStore1);
 				System.out.println(ventaTest);
-
 			};
 		}
+
 
 }

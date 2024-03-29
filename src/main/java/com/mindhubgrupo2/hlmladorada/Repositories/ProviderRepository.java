@@ -1,12 +1,11 @@
 package com.mindhubgrupo2.hlmladorada.Repositories;
 
-import com.mindhubgrupo2.hlmladorada.models.Product;
+import com.mindhubgrupo2.hlmladorada.models.Provider;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProviderRepository extends JpaRepository<Provider, Long> {
 
-    Product findByName(String name);
-
+    Provider findByName(String name);
 }

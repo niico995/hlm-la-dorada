@@ -10,7 +10,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int productID;
+    private Long productID;
 
     private int stock;
 
@@ -54,7 +54,7 @@ public class Product {
         this.name = name;
     }
 
-    public int getProductID() {
+    public Long getProductID() {
         return productID;
     }
 

@@ -26,6 +26,14 @@ public class Provider {
     public Provider() {
     }
 
+    public Provider(String name, String phone, String email, String ruc, String adress) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.ruc = ruc;
+        this.adress = adress;
+    }
+
     public Long getProviderID() {
         return providerID;
     }

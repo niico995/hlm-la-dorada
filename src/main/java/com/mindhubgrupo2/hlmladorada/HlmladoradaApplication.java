@@ -28,8 +28,19 @@ public class HlmladoradaApplication {
 				Promo promos = new Promo(Set.of(0, 10, 15, 20));
 
 				Product product1 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
+				Product product2 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
+				Product product3 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
+				Product product4 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
+				Product product5 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
+
+
 
 				productRepository.save(product1);
+				productRepository.save(product2);
+				productRepository.save(product3);
+				productRepository.save(product4);
+				productRepository.save(product5);
+
 
 				System.out.println(product1);
 
@@ -52,7 +63,9 @@ public class HlmladoradaApplication {
 
 				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now().toString(), "Probando deudas");
 
-				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987", "Avenida siempre viva 159");
+				//public ClientStore(String name, String lastName, String phone, String rut, String adress)
+				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987", "Calle siempre viva 123");
+
 
 				clientStore1.setDoubutHolder(dobouts1);
 

@@ -1,15 +1,13 @@
-package com.mindhubgrupo2.hlmladorada.controllers;
+package com.mindhubgrupo2.hlmladorada.Controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.LoginDTO;
+import com.mindhubgrupo2.hlmladorada.DTO.RegisterClientStoreDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RegisterDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RegisterEmployeeDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.ClientOnlineRepository;
-import com.mindhubgrupo2.hlmladorada.Repositories.ClientStoreRespository;
+import com.mindhubgrupo2.hlmladorada.Repositories.ClientStoreRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.EmployeeRepository;
-import com.mindhubgrupo2.hlmladorada.models.ClientOnline;
-import com.mindhubgrupo2.hlmladorada.models.Employee;
-import com.mindhubgrupo2.hlmladorada.models.Role;
-import com.mindhubgrupo2.hlmladorada.models.WorkPosition;
+import com.mindhubgrupo2.hlmladorada.models.*;
 import com.mindhubgrupo2.hlmladorada.securityServices.JwtUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +45,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private ClientStoreRespository clientStoreRespository;
+    private ClientStoreRepository clientStoreRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> login (@RequestBody LoginDTO loginDTO) {
@@ -108,7 +106,9 @@ public class AuthController {
                 registerDTO.firstName(),
                 registerDTO.lastName(),
                 registerDTO.email(),
-                passwordEncoder.encode(registerDTO.password())
+                passwordEncoder.encode(registerDTO.password()),
+                registerDTO.phone(),
+                registerDTO.adress()
         );
 
         clientOnlineRepository.save(newClient);
@@ -155,6 +155,42 @@ public class AuthController {
         employeeRepository.save(newClient);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Your account was created successfully");
-    }
+    };
+    //String name, String lastName, String phone, String rut, String adress
+    @PostMapping("/register/clientStore")
 
+    public ResponseEntity<?> registerClientStore(@RequestBody RegisterClientStoreDTO registerClientStoreDTO) {
+
+
+        if (registerClientStoreDTO.name().isBlank()) {
+            return new ResponseEntity<>("The name field must not be empty ", HttpStatus.FORBIDDEN);
+        }
+        if (registerClientStoreDTO.lastName().isBlank()) {
+            return new ResponseEntity<>("The last name field must not be empty ", HttpStatus.FORBIDDEN);
+        }
+        if (registerClientStoreDTO.adress().isBlank()) {
+            return new ResponseEntity<>("The adress field must not be empty ", HttpStatus.FORBIDDEN);
+        }
+        if (registerClientStoreDTO.rut().isBlank()) {
+            return new ResponseEntity<>("The rut field must not be empty ", HttpStatus.FORBIDDEN);
+        }
+        if (registerClientStoreDTO.phone().isBlank()) {
+            return new ResponseEntity<>("The phone field must not be empty ", HttpStatus.FORBIDDEN);
+        }
+        if (clientStoreRepository.existsByRut(registerClientStoreDTO.rut())) {
+            return new ResponseEntity<>("The user is already registered", HttpStatus.FORBIDDEN);
+        }
+
+        ClientStore newClient = new ClientStore(
+                registerClientStoreDTO.name(),
+                registerClientStoreDTO.lastName(),
+                registerClientStoreDTO.phone(),
+                registerClientStoreDTO.rut(),
+                registerClientStoreDTO.adress()
+        );
+
+        clientStoreRepository.save(newClient);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Your account was created successfully");
+    };
 }

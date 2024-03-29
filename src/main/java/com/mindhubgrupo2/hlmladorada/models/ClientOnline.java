@@ -18,23 +18,29 @@ public class ClientOnline {
 
     private String email;
 
+    private String adress;
+
+    private String phone;
+
     private String role = "USER";
 
     private String password;
 
     private Double balance = 0.00;
 
-    @OneToOne(mappedBy = "clientOnlineHolder", fetch = FetchType.EAGER)
-    private Cart cartHolder;
+    @OneToMany(mappedBy = "clientOnlineHolder", fetch = FetchType.EAGER)
+    private Set<Cart> carts = new HashSet<>();
 
     public ClientOnline() {
     }
 
-    public ClientOnline(String name, String lastName, String email, String password) {
+    public ClientOnline(String name, String lastName, String email, String password, String phone, String adress) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.phone = phone;
+        this.adress = adress;
     }
 
     public Long getClientOnlineID() {
@@ -89,17 +95,33 @@ public class ClientOnline {
         this.role = role;
     }
 
-    public Cart getCartHolder() {
-        return cartHolder;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setCartHolder(Cart cartHolder) {
-        this.cartHolder = cartHolder;
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Set<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
     }
 
     public void addCart(Cart cart) {
         cart.setClientOnlineHolder(this);
-        this.setCartHolder(cart);
+        carts.add(cart);
     }
 
     @Override
@@ -111,7 +133,9 @@ public class ClientOnline {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", balance=" + balance +
-                ", cartHolder=" + cartHolder +
+                ", carts=" + carts +
+                ", adress=" + adress +
+                ", phone=" + phone +
                 '}';
     }
 }

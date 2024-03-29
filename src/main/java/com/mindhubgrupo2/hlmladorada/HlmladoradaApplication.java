@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -22,8 +21,9 @@ public class HlmladoradaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HlmladoradaApplication.class, args);}
 
-		@Bean
-		public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRespository clientStoreRespository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
+	@Bean
+	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRespository clientStoreRespository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
+
 			return args -> {
 				Promo promos = new Promo(Set.of(0, 10, 15, 20));
 
@@ -49,14 +49,15 @@ public class HlmladoradaApplication {
 				System.out.println(cart1);
 				System.out.println(cartFinal);
 
-				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now(), "Probando deudas");
+
+				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now().toString(), "Probando deudas");
 
 				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987");
 
 				clientStore1.setDoubutHolder(dobouts1);
 
 				clientDoubutsRepository.save(dobouts1);
-				clientStoreRespository.save(clientStore1);
+				clientStoreRepository.save(clientStore1);
 				dobouts1.setClientStoreHolder(clientStore1);
 				clientDoubutsRepository.save(dobouts1);
 

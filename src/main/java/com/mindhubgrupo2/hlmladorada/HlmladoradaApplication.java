@@ -22,7 +22,7 @@ public class HlmladoradaApplication {
 		SpringApplication.run(HlmladoradaApplication.class, args);}
 
 	@Bean
-	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRespository clientStoreRespository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
+	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRepository clientStoreRepository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
 
 			return args -> {
 				Promo promos = new Promo(Set.of(0, 10, 15, 20));
@@ -38,7 +38,7 @@ public class HlmladoradaApplication {
 				CartDetails cart1 = new CartDetails(quantity, amount);
 				Cart cartFinal = new Cart();
 
-				cart1.addProducts(product1);
+				product1.addCartDetail(cart1);
 
 				cartDetalsRepository.save(cart1);
 
@@ -52,7 +52,7 @@ public class HlmladoradaApplication {
 
 				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now().toString(), "Probando deudas");
 
-				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987");
+				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987", "Avenida siempre viva 159");
 
 				clientStore1.setDoubutHolder(dobouts1);
 
@@ -65,7 +65,7 @@ public class HlmladoradaApplication {
 
 				double finalWithTaxes = cart1.getAmount() + cart1.getAmount() + cart1.getAmount() * 1.105;
 
-				Sales ventaTest = new Sales("Probando venta", finalWithTaxes, List.of("Credit"), List.of(10.5));
+				Sales ventaTest = new Sales("Probando venta", finalWithTaxes, "Credit", List.of(10.5));
 
 				tiendita.addSale(ventaTest);
 
@@ -75,9 +75,9 @@ public class HlmladoradaApplication {
 
 				salesRepository.save(ventaTest);
 
-				clientStore1.addCart(cartFinal);
+				clientStore1.addCarts(cartFinal);
 
-				clientStoreRespository.save(clientStore1);
+				clientStoreRepository.save(clientStore1);
 
 				cartRepository.save(cartFinal);
 

@@ -12,9 +12,9 @@ public class CartDetailsDTO {
 
     private Long cartDetailsID;
 
-    private int quantity;
+    private Integer quantity;
 
-    private double amount;
+    private Double amount;
 
     private Cart cartHolder;
 
@@ -32,11 +32,11 @@ public class CartDetailsDTO {
         return cartDetailsID;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 

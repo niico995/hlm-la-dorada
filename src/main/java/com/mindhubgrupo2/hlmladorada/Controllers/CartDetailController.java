@@ -2,18 +2,19 @@ package com.mindhubgrupo2.hlmladorada.Controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.CartDetailsDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.ClientOnlineDTO;
+import com.mindhubgrupo2.hlmladorada.DTO.RecordCartDetailDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.CartDetalsRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.EmployeeRepository;
+import com.mindhubgrupo2.hlmladorada.Repositories.ProductRepository;
 import com.mindhubgrupo2.hlmladorada.models.CartDetails;
 import com.mindhubgrupo2.hlmladorada.models.ClientOnline;
 import com.mindhubgrupo2.hlmladorada.models.Employee;
+import com.mindhubgrupo2.hlmladorada.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,9 @@ public class CartDetailController {
     @Autowired
     private CartDetalsRepository cartDetalsRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @GetMapping("/")
     public ResponseEntity<?> getAllCartsDetails(){
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -38,4 +42,24 @@ public class CartDetailController {
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
     }
+
+    //MODELO DE PRUEBA CARRITO / REEMPLAZADO EN CARTCURRENT
+
+//    @PostMapping("/cartsDetails")
+//    public ResponseEntity<?> postCartDetails(@RequestBody RecordCartDetailDTO recordCartDetailDTO) {
+//        Product product = productRepository.findById(recordCartDetailDTO.productoId()).orElse(null);
+//        if (product != null) {
+//            CartDetails cartDetails = new CartDetails(recordCartDetailDTO.quantity(), recordCartDetailDTO.amount());
+//
+//        product.addCartDetail(cartDetails);
+//
+//        cartDetalsRepository.save(cartDetails);
+//        productRepository.save(product);
+//
+//        return new ResponseEntity<>(cartDetails, HttpStatus.OK);
+//
+//        }
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Product not found by its ID");
+//
+//    }
 }

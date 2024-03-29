@@ -13,9 +13,9 @@ public class CartDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartDetailsID;
 
-    private int quantity;
+    private Integer quantity;
 
-    private double amount;
+    private Double amount;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CartID")
@@ -29,7 +29,7 @@ public class CartDetails {
     public CartDetails() {
     }
 
-    public CartDetails(int quantity, double amount) {
+    public CartDetails(Integer quantity, Double amount) {
         this.quantity = quantity;
         this.amount = amount;
     }
@@ -39,20 +39,20 @@ public class CartDetails {
     }
 
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
 
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

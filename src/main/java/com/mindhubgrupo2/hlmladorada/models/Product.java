@@ -28,16 +28,8 @@ public class Product {
     @Column(name="promos")
     private Set<Integer> promos = new HashSet<>();
 
-    //private int providerID; To be done when the ecommerce is finished
-
-
-    @ManyToMany(mappedBy = "products")
+    @OneToMany(mappedBy = "productHolder")
     private Set<CartDetails> cartDetails = new HashSet<>();
-
-    public void addCartDetail(CartDetails cartDetail){
-        cartDetail.getProducts().add(this);
-        this.cartDetails.add(cartDetail);
-    }
 
     public Product() {
     }
@@ -156,6 +148,11 @@ public class Product {
         this.setPurchaseHolder(purchase);
     }
 
+    public void addCartDetail(CartDetails cartDetail){
+        cartDetail.setProductHolder(this);
+        cartDetails.add(cartDetail);
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -169,6 +166,7 @@ public class Product {
                 ", category='" + category + '\'' +
                 ", promos=" + promos +
                 ", purchaseHolder=" + purchaseHolder +
+                ", cartsDetailsHolder=" +  cartDetails +
                 '}';
     }
 }

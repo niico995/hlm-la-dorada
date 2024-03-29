@@ -13,7 +13,7 @@ public class ClientDoubuts {
 
     private Double amount;
 
-    private LocalDateTime date;
+    private String date;
 
     private String details;
 
@@ -24,7 +24,7 @@ public class ClientDoubuts {
     public ClientDoubuts() {
     }
 
-    public ClientDoubuts(Double amount, LocalDateTime date, String details) {
+    public ClientDoubuts(Double amount, String date, String details) {
         this.amount = amount;
         this.date = date;
         this.details = details;
@@ -42,11 +42,11 @@ public class ClientDoubuts {
         this.amount = amount;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

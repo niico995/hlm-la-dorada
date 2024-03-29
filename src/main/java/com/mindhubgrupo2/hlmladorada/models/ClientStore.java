@@ -29,8 +29,8 @@ public class ClientStore {
     @OneToOne(mappedBy = "clientStoreHolder", fetch = FetchType.EAGER)
     private ClientDoubuts doubutHolder;
 
-    @OneToOne(mappedBy = "clientStoreHolder", fetch = FetchType.EAGER)
-    private Cart cartHolder;
+    @OneToMany(mappedBy = "clientStoreHolder", fetch = FetchType.EAGER)
+    private Set<Cart> carts = new HashSet<>();
 
     public ClientStore() {
     }
@@ -103,12 +103,12 @@ public class ClientStore {
         this.doubutHolder = doubut;
     }
 
-    public Cart getCartHolder() {
-        return cartHolder;
+    public Set<Cart> getCarts() {
+        return carts;
     }
 
-    public void setCartHolder(Cart cart) {
-        this.cartHolder = cart;
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
     }
 
     public String getAdress() {
@@ -119,9 +119,9 @@ public class ClientStore {
         this.adress = adress;
     }
 
-    public void addCart(Cart cart) {
+    public void addCarts(Cart cart) {
         cart.setClientStore(this);
-        this.setCartHolder(cart);
+        carts.add(cart);
     }
 
     public void addClientDoubuts(ClientDoubuts clientDoubuts) {
@@ -139,7 +139,7 @@ public class ClientStore {
                 ", rut='" + rut + '\'' +
                 ", balance=" + balance +
                 ", doubutHolder=" + doubutHolder +
-                ", cartHolder=" + cartHolder +
+                ", carts=" + carts +
                 ", adress=" + adress +
                 '}';
     }

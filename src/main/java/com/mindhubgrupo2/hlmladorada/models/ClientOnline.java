@@ -28,8 +28,8 @@ public class ClientOnline {
 
     private Double balance = 0.00;
 
-    @OneToOne(mappedBy = "clientOnlineHolder", fetch = FetchType.EAGER)
-    private Cart cartHolder;
+    @OneToMany(mappedBy = "clientOnlineHolder", fetch = FetchType.EAGER)
+    private Set<Cart> carts = new HashSet<>();
 
     public ClientOnline() {
     }
@@ -95,10 +95,6 @@ public class ClientOnline {
         this.role = role;
     }
 
-    public Cart getCartHolder() {
-        return cartHolder;
-    }
-
     public String getAdress() {
         return adress;
     }
@@ -115,13 +111,17 @@ public class ClientOnline {
         this.phone = phone;
     }
 
-    public void setCartHolder(Cart cartHolder) {
-        this.cartHolder = cartHolder;
+    public Set<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
     }
 
     public void addCart(Cart cart) {
         cart.setClientOnlineHolder(this);
-        this.setCartHolder(cart);
+        carts.add(cart);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class ClientOnline {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", balance=" + balance +
-                ", cartHolder=" + cartHolder +
+                ", carts=" + carts +
                 ", adress=" + adress +
                 ", phone=" + phone +
                 '}';

@@ -5,7 +5,7 @@ import com.mindhubgrupo2.hlmladorada.DTO.RegisterClientStoreDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RegisterDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RegisterEmployeeDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.ClientOnlineRepository;
-import com.mindhubgrupo2.hlmladorada.Repositories.ClientStoreRespository;
+import com.mindhubgrupo2.hlmladorada.Repositories.ClientStoreRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.EmployeeRepository;
 import com.mindhubgrupo2.hlmladorada.models.*;
 import com.mindhubgrupo2.hlmladorada.securityServices.JwtUtilService;
@@ -45,7 +45,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private ClientStoreRespository clientStoreRespository;
+    private ClientStoreRepository clientStoreRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> login (@RequestBody LoginDTO loginDTO) {
@@ -177,7 +177,7 @@ public class AuthController {
         if (registerClientStoreDTO.phone().isBlank()) {
             return new ResponseEntity<>("The phone field must not be empty ", HttpStatus.FORBIDDEN);
         }
-        if (clientStoreRespository.existsByRut(registerClientStoreDTO.rut())) {
+        if (clientStoreRepository.existsByRut(registerClientStoreDTO.rut())) {
             return new ResponseEntity<>("The user is already registered", HttpStatus.FORBIDDEN);
         }
 
@@ -189,7 +189,7 @@ public class AuthController {
                 registerClientStoreDTO.adress()
         );
 
-        clientStoreRespository.save(newClient);
+        clientStoreRepository.save(newClient);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Your account was created successfully");
     };

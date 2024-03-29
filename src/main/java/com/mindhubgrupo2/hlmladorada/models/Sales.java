@@ -16,11 +16,11 @@ public class Sales {
 
     private String details;
 
-    private double finalAmount;
+    private Double finalAmount;
 
-    private List<String> paidMethod = new ArrayList<>();
+    private String paidMethod;
 
-    private List<Double> taxes = new ArrayList<>();
+    private List<Double> taxes;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employeeHolderID")
@@ -33,7 +33,7 @@ public class Sales {
     public Sales() {
     }
 
-    public Sales(String details, double finalAmount, List<String> paidMethod, List<Double> taxes) {
+    public Sales(String details, Double finalAmount, String paidMethod, List<Double> taxes) {
         this.details = details;
         this.finalAmount = finalAmount;
         this.paidMethod = paidMethod;
@@ -52,19 +52,19 @@ public class Sales {
         this.details = details;
     }
 
-    public double getFinalAmount() {
+    public Double getFinalAmount() {
         return finalAmount;
     }
 
-    public void setFinalAmount(double finalAmount) {
+    public void setFinalAmount(Double finalAmount) {
         this.finalAmount = finalAmount;
     }
 
-    public List<String> getPaidMethod() {
+    public String getPaidMethod() {
         return paidMethod;
     }
 
-    public void setPaidMethod(List<String> paidMethod) {
+    public void setPaidMethod(String paidMethod) {
         this.paidMethod = paidMethod;
     }
 

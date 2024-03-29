@@ -13,39 +13,23 @@ public class CartDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartDetailsID;
 
-    private int quantity;
+    private Integer quantity;
 
-    private double amount;
-
-
-    @ManyToMany
-    @JoinTable(name = "cart_cartdetails",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "cartdetails_id"))
-    private Set<Cart> carts = new HashSet<>();
+    private Double amount;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CartID")
     private Cart cartHolder;
 
 
-    @ManyToMany
-    @JoinTable(name = "cart_details_product",
-            joinColumns = @JoinColumn(name = "cart_details_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products = new HashSet<>();
-
-    public void addProducts(Product product){
-        product.getCartDetails().add(this);
-        products.add(product);
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CartDetailsProduct")
+    private Product productHolder;
 
     public CartDetails() {
     }
 
-
-
-    public CartDetails(int quantity, double amount) {
+    public CartDetails(Integer quantity, Double amount) {
         this.quantity = quantity;
         this.amount = amount;
     }
@@ -55,21 +39,20 @@ public class CartDetails {
     }
 
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
 
     }
 
-
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -81,12 +64,12 @@ public class CartDetails {
         this.cartHolder = cartHolder;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public Product getProductHolder() {
+        return productHolder;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setProductHolder(Product productHolder) {
+        this.productHolder = productHolder;
     }
 
     @Override
@@ -95,7 +78,6 @@ public class CartDetails {
                 "cartDetailsID=" + cartDetailsID +
                 ", quantity=" + quantity +
                 ", amount=" + amount +
-                ", products=" + products +
                 '}';
     }
 }

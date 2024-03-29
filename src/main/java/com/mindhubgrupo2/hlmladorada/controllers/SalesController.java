@@ -1,18 +1,19 @@
 package com.mindhubgrupo2.hlmladorada.Controllers;
 
+import com.mindhubgrupo2.hlmladorada.DTO.RecordSaleDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.SalesDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.CartRepository;
+import com.mindhubgrupo2.hlmladorada.Repositories.EmployeeRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.ProductRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.SalesRepository;
 import com.mindhubgrupo2.hlmladorada.models.Cart;
+import com.mindhubgrupo2.hlmladorada.models.Employee;
 import com.mindhubgrupo2.hlmladorada.models.Product;
 import com.mindhubgrupo2.hlmladorada.models.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +24,16 @@ public class SalesController {
 
 
     @Autowired
-    CartRepository cartRepository;
+    private CartRepository cartRepository;
 
     @Autowired
-    SalesRepository salesRepository;
+    private SalesRepository salesRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @GetMapping("/all")
     public ResponseEntity<?> getSales(){
@@ -35,6 +42,39 @@ public class SalesController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No sales done yet");
         }
         return new ResponseEntity<>(allSales.stream().map(SalesDTO::new).collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+//    String details, Double finalAmount, String paidMethod, String taxes, Long employeeId, Long cartId
+    @PostMapping("/")
+    public ResponseEntity<?> postNewSale(@RequestBody RecordSaleDTO recordSaleDTO) {
+
+        Employee newEmployee = employeeRepository.findById(recordSaleDTO.employeeId()).orElse(null);
+        if(newEmployee == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
+        }
+
+        Cart newCart = cartRepository.findById(recordSaleDTO.cartId()).orElse(null);
+
+        if(newCart == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart not found");
+        }
+
+        Sales saleCurrent = new Sales(
+                recordSaleDTO.details(),
+                recordSaleDTO.finalAmount(),
+                recordSaleDTO.paidMethod(),
+                recordSaleDTO.taxes()
+        );
+
+        newCart.addSale(saleCurrent);
+        newEmployee.addSale(saleCurrent);
+
+        cartRepository.save(newCart);
+        employeeRepository.save(newEmployee);
+        salesRepository.save(saleCurrent);
+
+        return ResponseEntity.status(HttpStatus.OK).body("sale successfully created");
+
     }
 
 }

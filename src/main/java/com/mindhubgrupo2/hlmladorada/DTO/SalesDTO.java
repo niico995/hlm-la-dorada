@@ -11,23 +11,47 @@ public class SalesDTO {
 
     private double finalAmount;
 
-    private List<String> paidMethod = new ArrayList<>();
+    private String paidMethod;
+
+    private List<Double> taxes;
+
 
     public SalesDTO(Sales sale) {
         this.id = sale.getSalesID();
         this.finalAmount = sale.getFinalAmount();
         this.paidMethod = sale.getPaidMethod();
+        this.taxes = sale.getTaxes();
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public double getFinalAmount() {
         return finalAmount;
     }
 
-    public List<String> getPaidMethod() {
+    public void setFinalAmount(double finalAmount) {
+        this.finalAmount = finalAmount;
+    }
+
+    public String getPaidMethod() {
         return paidMethod;
+    }
+
+    public void setPaidMethod(String paidMethod) {
+        this.paidMethod = paidMethod;
+    }
+
+    public List<Double> getTaxes() {
+        return taxes;
+    }
+
+    public void setTaxes(List<Double> taxes) {
+        this.taxes = taxes;
     }
 }

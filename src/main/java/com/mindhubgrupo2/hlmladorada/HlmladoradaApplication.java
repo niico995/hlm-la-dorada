@@ -49,7 +49,7 @@ public class HlmladoradaApplication {
 				CartDetails cart1 = new CartDetails(quantity, amount);
 				Cart cartFinal = new Cart();
 
-				cart1.addProducts(product1);
+				product1.addCartDetail(cart1);
 
 				cartDetalsRepository.save(cart1);
 
@@ -66,6 +66,7 @@ public class HlmladoradaApplication {
 				//public ClientStore(String name, String lastName, String phone, String rut, String adress)
 				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987", "Calle siempre viva 123");
 
+
 				clientStore1.setDoubutHolder(dobouts1);
 
 				clientDoubutsRepository.save(dobouts1);
@@ -77,7 +78,7 @@ public class HlmladoradaApplication {
 
 				double finalWithTaxes = cart1.getAmount() + cart1.getAmount() + cart1.getAmount() * 1.105;
 
-				Sales ventaTest = new Sales("Probando venta", finalWithTaxes, List.of("Credit"), List.of(10.5));
+				Sales ventaTest = new Sales("Probando venta", finalWithTaxes, "Credit", List.of(10.5));
 
 				tiendita.addSale(ventaTest);
 

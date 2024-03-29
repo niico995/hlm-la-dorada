@@ -13,11 +13,11 @@ public class Cart {
     private int cartID;
 
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientStCart")
     private ClientStore clientStoreHolder;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientOnCart")
     private ClientOnline clientOnlineHolder;
 

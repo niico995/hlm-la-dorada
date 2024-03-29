@@ -10,4 +10,5 @@ public interface ClientOnlineRepository extends JpaRepository<ClientOnline, Long
     Boolean existsByEmail(String email);
 
     ClientOnline findByEmail(String email);
+
 }

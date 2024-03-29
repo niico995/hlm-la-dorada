@@ -1,4 +1,4 @@
-package com.mindhubgrupo2.hlmladorada.controllers;
+package com.mindhubgrupo2.hlmladorada.Controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.SalesDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.CartRepository;

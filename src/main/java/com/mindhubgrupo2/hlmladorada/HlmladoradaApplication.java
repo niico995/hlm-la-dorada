@@ -22,7 +22,7 @@ public class HlmladoradaApplication {
 		SpringApplication.run(HlmladoradaApplication.class, args);}
 
 	@Bean
-	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRespository clientStoreRespository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
+	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRepository clientStoreRepository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
 
 			return args -> {
 				Promo promos = new Promo(Set.of(0, 10, 15, 20));
@@ -63,7 +63,8 @@ public class HlmladoradaApplication {
 
 				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now().toString(), "Probando deudas");
 
-				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987");
+				//public ClientStore(String name, String lastName, String phone, String rut, String adress)
+				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987", "Calle siempre viva 123");
 
 				clientStore1.setDoubutHolder(dobouts1);
 
@@ -86,9 +87,9 @@ public class HlmladoradaApplication {
 
 				salesRepository.save(ventaTest);
 
-				clientStore1.addCart(cartFinal);
+				clientStore1.addCarts(cartFinal);
 
-				clientStoreRespository.save(clientStore1);
+				clientStoreRepository.save(clientStore1);
 
 				cartRepository.save(cartFinal);
 

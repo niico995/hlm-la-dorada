@@ -27,8 +27,6 @@ public class ClientStoreDTO {
 
     private Double balance;
 
-    private ClientDoubutsDTO doubutHolder;
-
     private Set<CartDTO> carts = new HashSet<>();
 
     public ClientStoreDTO(ClientStore clientStore) {
@@ -39,7 +37,6 @@ public class ClientStoreDTO {
         this.phone = clientStore.getPhone();
         this.rut = clientStore.getRut();
         this.balance = clientStore.getBalance();
-        this.doubutHolder = new ClientDoubutsDTO(clientStore.getDoubutHolder());
         this.carts = clientStore.getCarts().stream().map(CartDTO::new).collect(Collectors.toSet());
     }
 
@@ -69,10 +66,6 @@ public class ClientStoreDTO {
 
     public Double getBalance() {
         return balance;
-    }
-
-    public ClientDoubutsDTO getDoubutHolder() {
-        return doubutHolder;
     }
 
     public Set<CartDTO> getCarts() {

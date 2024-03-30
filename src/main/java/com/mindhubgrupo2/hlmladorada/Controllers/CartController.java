@@ -1,7 +1,6 @@
 package com.mindhubgrupo2.hlmladorada.Controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.CartDTO;
-import com.mindhubgrupo2.hlmladorada.DTO.CartDetailsDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RecordCartDetailDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.*;
 import com.mindhubgrupo2.hlmladorada.models.*;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

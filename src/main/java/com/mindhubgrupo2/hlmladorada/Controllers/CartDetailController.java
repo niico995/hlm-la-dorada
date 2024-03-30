@@ -1,15 +1,11 @@
 package com.mindhubgrupo2.hlmladorada.Controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.CartDetailsDTO;
-import com.mindhubgrupo2.hlmladorada.DTO.ClientOnlineDTO;
-import com.mindhubgrupo2.hlmladorada.DTO.RecordCartDetailDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.CartDetalsRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.EmployeeRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.ProductRepository;
 import com.mindhubgrupo2.hlmladorada.models.CartDetails;
-import com.mindhubgrupo2.hlmladorada.models.ClientOnline;
 import com.mindhubgrupo2.hlmladorada.models.Employee;
-import com.mindhubgrupo2.hlmladorada.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

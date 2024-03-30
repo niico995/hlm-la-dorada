@@ -8,7 +8,6 @@ import com.mindhubgrupo2.hlmladorada.Repositories.ProductRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.SalesRepository;
 import com.mindhubgrupo2.hlmladorada.models.Cart;
 import com.mindhubgrupo2.hlmladorada.models.Employee;
-import com.mindhubgrupo2.hlmladorada.models.Product;
 import com.mindhubgrupo2.hlmladorada.models.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

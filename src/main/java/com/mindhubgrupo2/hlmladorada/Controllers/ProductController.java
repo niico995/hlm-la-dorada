@@ -1,4 +1,4 @@
-package com.mindhubgrupo2.hlmladorada.controllers;
+package com.mindhubgrupo2.hlmladorada.Controllers;
 
 
 import com.mindhubgrupo2.hlmladorada.DTO.ProductDTO;
@@ -6,7 +6,6 @@ import com.mindhubgrupo2.hlmladorada.Repositories.ProductRepository;
 import com.mindhubgrupo2.hlmladorada.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +32,5 @@ public class ProductController {
         return new ResponseEntity<>(products.stream().map(ProductDTO::new).collect(Collectors.toList()), HttpStatus.OK);
 
     }
-
-
-
 
 }

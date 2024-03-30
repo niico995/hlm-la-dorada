@@ -1,9 +1,7 @@
 package com.mindhubgrupo2.hlmladorada.Controllers;
 
-import com.mindhubgrupo2.hlmladorada.DTO.ClientOnlineDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.EmployeeDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.EmployeeRepository;
-import com.mindhubgrupo2.hlmladorada.models.ClientOnline;
 import com.mindhubgrupo2.hlmladorada.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

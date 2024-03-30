@@ -1,8 +1,6 @@
 package com.mindhubgrupo2.hlmladorada.Controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.ClientDoubutsDTO;
-import com.mindhubgrupo2.hlmladorada.DTO.EmployeeDTO;
-import com.mindhubgrupo2.hlmladorada.DTO.LoginDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RecordDoubutsDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.ClientDoubutsRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.ClientStoreRepository;
@@ -48,25 +46,32 @@ public class ClientDoubutsController {
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         Employee employee = employeeRepository.findByEmail(userMail);
         if (employee.getRole().toString().equals("ADMIN") || employee.getRole().toString().equals("EMPLOYEE")) {
-            if(clientStoreRepository.existsByRut(recordDoubutsDTO.rut())) {
-                ClientStore client = clientStoreRepository.findByRut(recordDoubutsDTO.rut());
-
-                ClientDoubuts clientDoubuts1 = new ClientDoubuts(
-                        recordDoubutsDTO.amount(),
-                        recordDoubutsDTO.date(),
-                        recordDoubutsDTO.details()
-                );
-
-                client.addClientDoubuts(clientDoubuts1);
-
-                clientStoreRepository.save(client);
-                clientDoubutsRepository.save(clientDoubuts1);
-
-                return ResponseEntity.status(HttpStatus.OK).body("successfully registered debt");
-
-            } else {
+            if(!clientStoreRepository.existsByRut(recordDoubutsDTO.rut())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Client not found in records");
             }
+
+            ClientStore clientStore = clientStoreRepository.findByRut(recordDoubutsDTO.rut());
+            System.out.println(clientStore);
+            if(!(clientStore.getDoubutHolder() == null)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You cannot have more than 1 debt");
+            }
+
+            ClientDoubuts clientDoubuts = new ClientDoubuts(
+                    recordDoubutsDTO.amount(),
+                    recordDoubutsDTO.date(),
+                    recordDoubutsDTO.details()
+            );
+            System.out.println(clientDoubuts);
+            clientDoubutsRepository.save(clientDoubuts);
+
+            clientStore.addClientDoubuts(clientDoubuts);
+
+            clientDoubutsRepository.save(clientDoubuts);
+            clientStoreRepository.save(clientStore);
+
+            return ResponseEntity.status(HttpStatus.OK).body("successfully registered debt");
+
+
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
     }

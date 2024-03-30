@@ -10,8 +10,7 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartID;
-
+    private Long cartID;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientStCart")
@@ -24,13 +23,13 @@ public class Cart {
     @OneToMany(mappedBy="cartHolder", fetch = FetchType.EAGER)
     private Set<CartDetails> cartDetails = new HashSet<>();
 
+    @OneToOne(mappedBy = "cartHolder")
+    private Sales salesHolder;
+
     public void addCartDetails(CartDetails cartDetail){
         cartDetail.setCartHolder(this);
         cartDetails.add(cartDetail);
     }
-
-    @OneToOne(mappedBy = "cartHolder")
-    private Sales salesHolder;
 
     public void addSale(Sales sale){
         sale.setCartHolder(this);
@@ -40,8 +39,7 @@ public class Cart {
     public Cart() {
     }
 
-
-    public int getCartID() {
+    public Long getCartID() {
         return cartID;
     }
 

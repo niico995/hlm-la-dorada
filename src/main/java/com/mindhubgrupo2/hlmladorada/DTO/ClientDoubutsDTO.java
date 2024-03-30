@@ -18,14 +18,14 @@ public class ClientDoubutsDTO {
 
     private String details;
 
-    private ClientStore clientStoreHolder;
+    private Long clientStoreHolder;
 
     public ClientDoubutsDTO(ClientDoubuts clientDoubuts) {
         this.clientDoboutsID = clientDoubuts.getClientDoboutsID();
         this.amount = clientDoubuts.getAmount();
         this.date = clientDoubuts.getDate();
         this.details = clientDoubuts.getDetails();
-        this.clientStoreHolder = clientDoubuts.getClientStoreHolder();
+        this.clientStoreHolder = clientDoubuts.getClientStoreHolder().getClientStoreID();
     }
 
     public Long getClientDoboutsID() {
@@ -44,7 +44,7 @@ public class ClientDoubutsDTO {
         return details;
     }
 
-    public ClientStore getClientStoreHolder() {
+    public Long getClientStoreHolder() {
         return clientStoreHolder;
     }
 }

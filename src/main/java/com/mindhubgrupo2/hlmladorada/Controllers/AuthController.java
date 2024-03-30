@@ -67,8 +67,10 @@ public class AuthController {
                 return new ResponseEntity<>("The password entered is not valid", HttpStatus.FORBIDDEN);
             }
         }
-        if(!passwordEncoder.matches(loginDTO.password(), clientOnline.getPassword())) {
-            return new ResponseEntity<>("The password entered is not valid", HttpStatus.FORBIDDEN);
+        if (clientOnline != null) {
+            if(!passwordEncoder.matches(loginDTO.password(), clientOnline.getPassword())) {
+                return new ResponseEntity<>("The password entered is not valid", HttpStatus.FORBIDDEN);
+            }
         }
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.email(), loginDTO.password()));

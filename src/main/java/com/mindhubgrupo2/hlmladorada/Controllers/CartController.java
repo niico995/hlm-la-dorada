@@ -52,19 +52,22 @@ public class CartController {
     @Transactional
     @PostMapping("/")
     public ResponseEntity<?> postCart(@RequestBody List<RecordCartDetailDTO> cartsDetails) {
+        System.out.println(cartsDetails);
 
         Cart cartCurrent = new Cart();
 
-        cartsDetails.stream().map(cartDetail -> {
-            Product product = productRepository.findById(cartDetail.productoId()).orElse(null);
+        for (var i=0; i<cartsDetails.size();i++) {
+            System.out.println("cart " + i + ": " + cartsDetails.get(i));
 
+            Product product = productRepository.findById(cartsDetails.get(i).productoId()).orElse(null);
+            System.out.println("producto "+ product);
             if(product != null) {
 
-                if (cartDetail.quantity() > product.getStock()) {
+                if (cartsDetails.get(i).quantity() > product.getStock()) {
                     return new ResponseEntity<>("Insufficient " + product.getName() + " stock", HttpStatus.FORBIDDEN);
                 }
 
-                CartDetails newCartDetails = new CartDetails(cartDetail.quantity(), cartDetail.amount());
+                CartDetails newCartDetails = new CartDetails(cartsDetails.get(i).quantity(), cartsDetails.get(i).amount());
 
                 product.addCartDetail(newCartDetails);
 
@@ -77,8 +80,7 @@ public class CartController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Product not found by its ID");
             }
 
-            return cartCurrent;
-        });
+        };
         if(!cartCurrent.getCartDetails().isEmpty()) {
             String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
             ClientOnline clientOnlineCurrent = clientOnlineRepository.findByEmail(userMail);
@@ -90,7 +92,7 @@ public class CartController {
         }
 
 
-        return new ResponseEntity<>(cartCurrent, HttpStatus.OK);
+        return new ResponseEntity<>(new CartDTO(cartCurrent), HttpStatus.OK);
     }
 
 }

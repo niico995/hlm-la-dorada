@@ -48,6 +48,7 @@ public class SalesController {
     @PostMapping("/")
     public ResponseEntity<?> postNewSale(@RequestBody RecordSaleDTO recordSaleDTO) {
 
+        System.out.println(recordSaleDTO);
         Employee newEmployee = employeeRepository.findById(recordSaleDTO.employeeId()).orElse(null);
         if(newEmployee == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
@@ -65,6 +66,7 @@ public class SalesController {
                 recordSaleDTO.paidMethod(),
                 recordSaleDTO.taxes()
         );
+        salesRepository.save(saleCurrent);
 
         newCart.addSale(saleCurrent);
         newEmployee.addSale(saleCurrent);

@@ -4,25 +4,36 @@ package com.mindhubgrupo2.hlmladorada;
 import com.mindhubgrupo2.hlmladorada.Repositories.*;
 import com.mindhubgrupo2.hlmladorada.models.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import static com.mindhubgrupo2.hlmladorada.models.Role.ADMIN;
+
 
 @SpringBootApplication
 public class HlmladoradaApplication {
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HlmladoradaApplication.class, args);}
 
 	@Bean
-	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRepository clientStoreRepository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
+	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository,
+									  CartRepository cartRepository, CartDetalsRepository cartDetalsRepository,
+									  ClientStoreRepository clientStoreRepository, ClientDoubutsRepository clientDoubutsRepository,
+									  EmployeeRepository employeeRepository, SalesRepository salesRepository,
+									  ClientOnlineRepository clientOnlineRepository) {
 
 			return args -> {
 				Promo promos = new Promo(Set.of(0, 10, 15, 20));
@@ -65,7 +76,10 @@ public class HlmladoradaApplication {
 
 				//public ClientStore(String name, String lastName, String phone, String rut, String adress)
 				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987", "Calle siempre viva 123");
+				ClientOnline melba = new ClientOnline("melba", "morel", "melba@mindhub.com",
+						passwordEncoder.encode("123"), "+3512311561", "Av. Olmos 435");
 
+				clientOnlineRepository.save(melba);
 
 				clientStore1.setDoubutHolder(dobouts1);
 
@@ -74,6 +88,7 @@ public class HlmladoradaApplication {
 				dobouts1.setClientStoreHolder(clientStore1);
 				clientDoubutsRepository.save(dobouts1);
 
+				Employee admin = new Employee("admin", "admin", "admin@mindhub.com", passwordEncoder.encode("123"), ADMIN, WorkPosition.JEFE);
 				Employee tiendita = new Employee("Tienda", "Online", "nuestro@correo", "tienda123", Role.EMPLOYEE, WorkPosition.ECOMMMERCE);
 
 				double finalWithTaxes = cart1.getAmount() + cart1.getAmount() + cart1.getAmount() * 1.105;
@@ -83,6 +98,7 @@ public class HlmladoradaApplication {
 				tiendita.addSale(ventaTest);
 
 				employeeRepository.save(tiendita);
+				employeeRepository.save(admin);
 
 				ventaTest.setCartHolder(cartFinal);
 

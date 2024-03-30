@@ -1,4 +1,4 @@
-package com.mindhubgrupo2.hlmladorada.controllers;
+package com.mindhubgrupo2.hlmladorada.Controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.NewPurchaseDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.PurchasesDTO;
@@ -34,7 +34,7 @@ public class PurchaseController {
 
         @GetMapping("/viewByDate")
         public ResponseEntity<?> viewPurchasesByDate(@RequestBody LocalDate date) {
-            List<Purchase> purchases = purchaseRepository.findByPurchasedate(date);
+            List<Purchase> purchases = purchaseRepository.findByDate(date);
 
             if(purchases.size() == 0){
                 return new ResponseEntity<>("No purchases done that day", HttpStatus.NOT_FOUND);

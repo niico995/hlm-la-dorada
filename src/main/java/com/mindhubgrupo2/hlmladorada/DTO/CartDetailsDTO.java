@@ -16,18 +16,11 @@ public class CartDetailsDTO {
 
     private Double amount;
 
-    private Cart cartHolder;
-
-    private Product productHolder;
-
     public CartDetailsDTO(CartDetails cartDetails) {
         this.cartDetailsID = cartDetails.getCartDetailsID();
         this.quantity = cartDetails.getQuantity();
         this.amount = cartDetails.getAmount();
-        this.cartHolder = cartDetails.getCartHolder();
-        this.productHolder = cartDetails.getProductHolder();
     }
-
     public Long getCartDetailsID() {
         return cartDetailsID;
     }
@@ -40,11 +33,4 @@ public class CartDetailsDTO {
         return amount;
     }
 
-    public Cart getCartHolder() {
-        return cartHolder;
-    }
-
-    public Product getProductHolder() {
-        return productHolder;
-    }
 }

@@ -65,7 +65,7 @@ public class ClientController {
                 return new ResponseEntity<>("The user with Id " + id + " is not found in the database.",
                         HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(client, HttpStatus.OK);
+            return new ResponseEntity<>(new ClientOnlineDTO(client), HttpStatus.OK);
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
     }
@@ -80,7 +80,7 @@ public class ClientController {
                 return new ResponseEntity<>("The user with Id " + id + " is not found in the database.",
                         HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(client, HttpStatus.OK);
+            return new ResponseEntity<>(new ClientStoreDTO(client), HttpStatus.OK);
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
     }

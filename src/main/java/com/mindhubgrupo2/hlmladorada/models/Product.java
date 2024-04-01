@@ -18,7 +18,7 @@ public class Product {
 
     private double revenue;
 
-    private String name,details, brand, category;
+    private String name,details, brand, category, image;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PurchaseProduct")
@@ -34,7 +34,15 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name,int stock, double cost, double finalPrice, double revenue, String details, String brand, String category, Set<Integer> promos) {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Product(String name, int stock, double cost, double finalPrice, double revenue, String details, String brand, String category, Set<Integer> promos, String image) {
         this.name = name;
         this.stock = stock;
         this.cost = cost;
@@ -44,6 +52,7 @@ public class Product {
         this.brand = brand;
         this.category = category;
         this.promos = promos;
+        this.image = image;
     }
 
     public String getName() {

@@ -15,6 +15,7 @@ public class ProductDTO {
 
     private String  name,details, brand, category, image;
 
+    private int stock;
     public ProductDTO() {}
 
     public ProductDTO(Product product){
@@ -26,6 +27,11 @@ public class ProductDTO {
         this.brand = product.getBrand();
         this.category = product.getCategory();
         this.image = product.getImage();
+        this.stock =product.getStock();
+    }
+
+    public int getStock() {
+        return stock;
     }
 
     public String getImage() {

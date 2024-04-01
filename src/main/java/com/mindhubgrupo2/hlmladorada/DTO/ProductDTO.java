@@ -1,7 +1,9 @@
 package com.mindhubgrupo2.hlmladorada.DTO;
 
 import com.mindhubgrupo2.hlmladorada.models.Product;
+import com.mindhubgrupo2.hlmladorada.models.Provider;
 
+import javax.management.monitor.StringMonitor;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +16,10 @@ public class ProductDTO {
     private Integer promos;
 
     private String  name,details, brand, category, image;
+
+    private String provider;
+
+
 
     private int stock;
     public ProductDTO() {}
@@ -28,8 +34,11 @@ public class ProductDTO {
         this.category = product.getCategory();
         this.image = product.getImage();
         this.stock =product.getStock();
+        this.provider = "Proveedor momentaneo";
     }
-
+    public String getProvider() {
+        return provider;
+    }
     public int getStock() {
         return stock;
     }

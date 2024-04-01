@@ -37,11 +37,11 @@ public class HlmladoradaApplication {
 
 			return args -> {
 
-				Product product1 = new Product("Pecera", 15, 150, 250, 20, "15 Litros", "GluGlu", "Peceras", Set.of(0, 10, 15, 20));
-				Product product2 = new Product("Pecera", 15, 150, 250, 20, "5 Litros", "FishLive", "Peceras", Set.of(0, 10, 15, 20));
-				Product product3 = new Product("BobSponge", 15, 150, 250, 20, "Bob Sponge Figure", "Nicklodeon", "Adornos", Set.of(0, 10, 15, 20));
-				Product product4 = new Product("Chest", 15, 150, 250, 20, "Chest to make Bubles", "Toys", "Adornos", Set.of(0, 10, 15, 20));
-				Product product5 = new Product("WaterBomb", 15, 150, 250, 20, "Up to tanks of 15L", "TechGluGlu", "Tecnologia", Set.of(0, 10, 15, 20));
+				Product product1 = new Product("Pecera", 15, 150, 250, 20, "15 Litros", "GluGlu", "Peceras", Set.of(0, 10, 15, 20),"https://imgur.com/a/Dz0Z0IY");
+				Product product2 = new Product("Pecera", 15, 150, 250, 20, "5 Litros", "FishLive", "Peceras", Set.of(0, 10, 15, 20),"https://imgur.com/a/Dz0Z0IY");
+				Product product3 = new Product("BobSponge", 15, 150, 250, 20, "Bob Sponge Figure", "Nicklodeon", "Adornos", Set.of(0, 10, 15, 20),"https://imgur.com/a/noQLtGm");
+				Product product4 = new Product("Chest", 15, 150, 250, 20, "Chest to make Bubles", "Toys", "Adornos", Set.of(0, 10, 15, 20),"https://imgur.com/a/wQKYzab");
+				Product product5 = new Product("WaterBomb", 15, 150, 250, 20, "Up to tanks of 15L", "TechGluGlu", "Tecnologia", Set.of(0, 10, 15, 20),"https://imgur.com/a/FoWVisH");
 
 				productRepository.save(product1);
 				productRepository.save(product2);

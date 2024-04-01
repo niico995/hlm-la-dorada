@@ -69,18 +69,18 @@ public class PurchaseController {
                 if(newPurchaseDTO.date().toString().isBlank()){
                     return new ResponseEntity<>("Insert a valid date",HttpStatus.BAD_REQUEST);
                 }
-                if(newPurchaseDTO.providerName().isBlank()){
+                if(newPurchaseDTO.providerID().toString().isBlank()){
                     return new ResponseEntity<>("Provider must be selected",HttpStatus.BAD_REQUEST);
                 }
 
-                Provider providerName = providerRepository.findByName(newPurchaseDTO.providerName());
+                Provider providerName = providerRepository.findById(newPurchaseDTO.providerID()).orElse(null);
 
-                if(providerName.toString().isBlank()){
+                if(providerName == null){
                     return new ResponseEntity<>("The provider do not exist",HttpStatus.BAD_REQUEST);
                 }
 
-                Product productName = productRepository.findByName(newPurchaseDTO.productName());
-                if(providerName.toString().isBlank()){
+                Product productName = productRepository.findById(newPurchaseDTO.productID()).orElse(null);
+                if(productName == null){
                     return new ResponseEntity<>("The product do not exist",HttpStatus.BAD_REQUEST);
                 }
 

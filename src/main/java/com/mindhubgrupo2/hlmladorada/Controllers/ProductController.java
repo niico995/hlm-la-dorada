@@ -53,7 +53,7 @@ public class ProductController {
                 return new ResponseEntity<>("Please, complete the category", HttpStatus.BAD_REQUEST);
             }
 
-            Product newProduct = new Product(registerProductDTO.name(), 0, 0, 0, registerProductDTO.revenue(), registerProductDTO.details(), registerProductDTO.brand(), registerProductDTO.category(), Set.of(0), registerProductDTO.imageURL());
+            Product newProduct = new Product(registerProductDTO.name(), 0, 0, 0, registerProductDTO.revenue(), registerProductDTO.details(), registerProductDTO.brand(), registerProductDTO.category(), 0, registerProductDTO.imageURL());
             productRepository.save(newProduct);
 
             return new ResponseEntity<>("Congrats, new product added to the inventory: " + registerProductDTO.name(), HttpStatus.CREATED);

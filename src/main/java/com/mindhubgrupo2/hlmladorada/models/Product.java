@@ -24,9 +24,7 @@ public class Product {
     @JoinColumn(name = "PurchaseProduct")
     private Purchase purchaseHolder;
 
-    @ElementCollection
-    @Column(name="promos")
-    private Set<Integer> promos = new HashSet<>();
+    private Integer promos;
 
     @OneToMany(mappedBy = "productHolder")
     private Set<CartDetails> cartDetails = new HashSet<>();
@@ -42,7 +40,7 @@ public class Product {
         this.image = image;
     }
 
-    public Product(String name, int stock, double cost, double finalPrice, double revenue, String details, String brand, String category, Set<Integer> promos, String image) {
+    public Product(String name, int stock, double cost, double finalPrice, double revenue, String details, String brand, String category, Integer promos, String image) {
         this.name = name;
         this.stock = stock;
         this.cost = cost;
@@ -123,11 +121,11 @@ public class Product {
         this.category = category;
     }
 
-    public Set<Integer> getPromos() {
+    public Integer getPromos() {
         return promos;
     }
 
-    public void setPromos(Set<Integer> promos) {
+    public void setPromos(Integer promos) {
         this.promos = promos;
     }
 

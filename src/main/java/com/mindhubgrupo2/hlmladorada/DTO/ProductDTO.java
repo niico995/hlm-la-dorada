@@ -1,7 +1,6 @@
 package com.mindhubgrupo2.hlmladorada.DTO;
 
 import com.mindhubgrupo2.hlmladorada.models.Product;
-import com.mindhubgrupo2.hlmladorada.models.Promo;
 
 import java.util.List;
 import java.util.Set;
@@ -12,7 +11,7 @@ public class ProductDTO {
 
     private double finalPrice;
 
-    private Set<Integer> promos;
+    private Integer promos;
 
     private String  name,details, brand, category;
 
@@ -36,7 +35,7 @@ public class ProductDTO {
         return finalPrice;
     }
 
-    public Set<Integer> getPromos() {
+    public Integer getPromos() {
         return promos;
     }
 

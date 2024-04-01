@@ -4,28 +4,38 @@ package com.mindhubgrupo2.hlmladorada;
 import com.mindhubgrupo2.hlmladorada.Repositories.*;
 import com.mindhubgrupo2.hlmladorada.models.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import static com.mindhubgrupo2.hlmladorada.models.Role.ADMIN;
+
 
 @SpringBootApplication
 public class HlmladoradaApplication {
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HlmladoradaApplication.class, args);}
 
 	@Bean
-	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository, CartRepository cartRepository, CartDetalsRepository cartDetalsRepository, ClientStoreRepository clientStoreRepository, ClientDoubutsRepository clientDoubutsRepository, EmployeeRepository employeeRepository, SalesRepository salesRepository) {
+	public CommandLineRunner initData(ProductRepository productRepository, PromoRepository promoRepository,
+									  CartRepository cartRepository, CartDetalsRepository cartDetalsRepository,
+									  ClientStoreRepository clientStoreRepository, ClientDoubutsRepository clientDoubutsRepository,
+									  EmployeeRepository employeeRepository, SalesRepository salesRepository,
+									  ClientOnlineRepository clientOnlineRepository) {
 
 			return args -> {
-				Promo promos = new Promo(Set.of(0, 10, 15, 20));
 
 				Product product1 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
 				Product product2 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
@@ -33,7 +43,100 @@ public class HlmladoradaApplication {
 				Product product4 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
 				Product product5 = new Product("Monitor", 15, 150, 250, 20, "15' Pulgadas", "Samsung", "Tecnologia", Set.of(0, 10, 15, 20));
 
+				productRepository.save(product1);
+				productRepository.save(product2);
+				productRepository.save(product3);
+				productRepository.save(product4);
+				productRepository.save(product5);
 
+				CartDetails cartDetails1 = new CartDetails(3, 15000.0);
+				CartDetails cartDetails2 = new CartDetails(5, 15000.0);
+				CartDetails cartDetails3 = new CartDetails(7, 15000.0);
+				CartDetails cartDetails4 = new CartDetails(9, 15000.0);
+
+				CartDetails cartDetails5 = new CartDetails(9, 15000.0);
+				CartDetails cartDetails6 = new CartDetails(7, 15000.0);
+				CartDetails cartDetails7 = new CartDetails(5, 15000.0);
+				CartDetails cartDetails8 = new CartDetails(3, 15000.0);
+
+				cartDetalsRepository.save(cartDetails1);
+				cartDetalsRepository.save(cartDetails2);
+				cartDetalsRepository.save(cartDetails3);
+				cartDetalsRepository.save(cartDetails4);
+
+				cartDetalsRepository.save(cartDetails5);
+				cartDetalsRepository.save(cartDetails6);
+				cartDetalsRepository.save(cartDetails7);
+				cartDetalsRepository.save(cartDetails8);
+
+				Cart cartFinal1 = new Cart();
+				Cart cartFinal2 = new Cart();
+
+				cartRepository.save(cartFinal1);
+				cartRepository.save(cartFinal2);
+
+				Sales sale1 = new Sales("Pago completado", 30000.0, List.of(PaidMethod.CREDITO), List.of(1500.0, 6000.0, 10000.0));
+				Sales sale2 = new Sales("Pago completado", 60000.0, List.of(PaidMethod.DEBITO), List.of(1500.0, 6000.0, 10000.0));
+
+				salesRepository.save(sale1);
+				salesRepository.save(sale2);
+
+				ClientOnline melba = new ClientOnline("melba", "morel", "melba@mindhub.com",
+						passwordEncoder.encode("123"), "+3512311561", "Av. Olmos 435");
+
+				ClientOnline silvia = new ClientOnline("Silvia", "Morel", "silvia@mindhub.com",
+						passwordEncoder.encode("123"), "+3512311561", "Av. Olmos 500");
+
+				ClientStore emaStore = new ClientStore("Ema", "Nuel", "+651213321", "13245678", "Av. Paraíso 456");
+				ClientStore ricardo = new ClientStore("Ricardo", "Gutierrez", "+849814652", "987654321", "Juan B. Justo");
+
+				clientOnlineRepository.save(melba);
+				clientOnlineRepository.save(silvia);
+				clientStoreRepository.save(emaStore);
+				clientStoreRepository.save(ricardo);
+
+				ClientDoubuts deudaClient1 = new ClientDoubuts(-15000.0, "Martes 15 de Enero 2024", "Sale 1 no pagada");
+
+				clientDoubutsRepository.save(deudaClient1);
+
+				Employee admin = new Employee("admin", "admin", "admin@mindhub.com",
+						passwordEncoder.encode("123"), ADMIN, WorkPosition.JEFE);
+				Employee luigi = new Employee("Luigi", "Carrascal", "luigi@mindhub.com",
+						passwordEncoder.encode("123"), ADMIN, WorkPosition.ATENCION);
+
+				employeeRepository.save(admin);
+				employeeRepository.save(luigi);
+
+				product1.addCartDetail(cartDetails1);
+				product1.addCartDetail(cartDetails2);
+				product2.addCartDetail(cartDetails3);
+				product2.addCartDetail(cartDetails4);
+				product3.addCartDetail(cartDetails5);
+				product3.addCartDetail(cartDetails6);
+				product4.addCartDetail(cartDetails7);
+				product5.addCartDetail(cartDetails8);
+
+				cartFinal1.addCartDetails(cartDetails1);
+				cartFinal1.addCartDetails(cartDetails2);
+				cartFinal1.addCartDetails(cartDetails3);
+				cartFinal1.addCartDetails(cartDetails4);
+
+				cartFinal2.addCartDetails(cartDetails5);
+				cartFinal2.addCartDetails(cartDetails6);
+				cartFinal2.addCartDetails(cartDetails7);
+				cartFinal2.addCartDetails(cartDetails8);
+
+				cartFinal1.addSale(sale1);
+				cartFinal2.addSale(sale2);
+
+				luigi.addSale(sale1);
+				luigi.addSale(sale2);
+
+				melba.addCart(cartFinal1);
+				silvia.addCart(cartFinal2);
+
+				emaStore.addCarts(cartFinal2);
+				emaStore.addClientDoubuts(deudaClient1);
 
 				productRepository.save(product1);
 				productRepository.save(product2);
@@ -41,62 +144,32 @@ public class HlmladoradaApplication {
 				productRepository.save(product4);
 				productRepository.save(product5);
 
+				cartDetalsRepository.save(cartDetails1);
+				cartDetalsRepository.save(cartDetails2);
+				cartDetalsRepository.save(cartDetails3);
+				cartDetalsRepository.save(cartDetails4);
 
-				System.out.println(product1);
+				cartDetalsRepository.save(cartDetails5);
+				cartDetalsRepository.save(cartDetails6);
+				cartDetalsRepository.save(cartDetails7);
+				cartDetalsRepository.save(cartDetails8);
 
-				int quantity = 2;
-				double amount = product1.getFinalPrice() * quantity;
-				CartDetails cart1 = new CartDetails(quantity, amount);
-				Cart cartFinal = new Cart();
+				cartRepository.save(cartFinal1);
+				cartRepository.save(cartFinal2);
 
-				product1.addCartDetail(cart1);
+				salesRepository.save(sale1);
+				salesRepository.save(sale2);
 
-				cartDetalsRepository.save(cart1);
+				clientOnlineRepository.save(melba);
+				clientOnlineRepository.save(silvia);
 
-				cartFinal.addCartDetails(cart1);
+				clientStoreRepository.save(emaStore);
+				clientDoubutsRepository.save(deudaClient1);
 
-				cartRepository.save(cartFinal);
+				employeeRepository.save(admin);
+				employeeRepository.save(luigi);
 
-				System.out.println(cart1);
-				System.out.println(cartFinal);
-
-
-				ClientDoubuts dobouts1 = new ClientDoubuts(150.00, LocalDateTime.now().toString(), "Probando deudas");
-
-				//public ClientStore(String name, String lastName, String phone, String rut, String adress)
-				ClientStore clientStore1 = new ClientStore("Cosme", "Fulanito", "+5401169993331", "15123987", "Calle siempre viva 123");
-
-
-				clientStore1.setDoubutHolder(dobouts1);
-
-				clientDoubutsRepository.save(dobouts1);
-				clientStoreRepository.save(clientStore1);
-				dobouts1.setClientStoreHolder(clientStore1);
-				clientDoubutsRepository.save(dobouts1);
-
-				Employee tiendita = new Employee("Tienda", "Online", "nuestro@correo", "tienda123", Role.EMPLOYEE, WorkPosition.ECOMMMERCE);
-
-				double finalWithTaxes = cart1.getAmount() + cart1.getAmount() + cart1.getAmount() * 1.105;
-
-				Sales ventaTest = new Sales("Probando venta", finalWithTaxes, "Credit", List.of(10.5));
-
-				tiendita.addSale(ventaTest);
-
-				employeeRepository.save(tiendita);
-
-				ventaTest.setCartHolder(cartFinal);
-
-				salesRepository.save(ventaTest);
-
-				clientStore1.addCarts(cartFinal);
-
-				clientStoreRepository.save(clientStore1);
-
-				cartRepository.save(cartFinal);
-
-
-				System.out.println(clientStore1);
-				System.out.println(ventaTest);
+				System.out.println("...... Corriendo ......");
 			};
 		}
 

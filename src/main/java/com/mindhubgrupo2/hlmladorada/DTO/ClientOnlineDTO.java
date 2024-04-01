@@ -29,6 +29,7 @@ public class ClientOnlineDTO {
     private Set<CartDTO> carts = new HashSet<>();
 
     public ClientOnlineDTO(ClientOnline clientOnline) {
+        this.clientOnlineID = clientOnline.getClientOnlineID();
         this.name = clientOnline.getName();
         this.lastName = clientOnline.getLastName();
         this.email = clientOnline.getEmail();

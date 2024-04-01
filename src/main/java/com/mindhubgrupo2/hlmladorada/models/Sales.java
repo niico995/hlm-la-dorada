@@ -18,7 +18,7 @@ public class Sales {
 
     private Double finalAmount;
 
-    private String paidMethod;
+    private List<PaidMethod> paidMethod;
 
     private List<Double> taxes;
 
@@ -33,7 +33,7 @@ public class Sales {
     public Sales() {
     }
 
-    public Sales(String details, Double finalAmount, String paidMethod, List<Double> taxes) {
+    public Sales(String details, Double finalAmount, List<PaidMethod> paidMethod, List<Double> taxes) {
         this.details = details;
         this.finalAmount = finalAmount;
         this.paidMethod = paidMethod;
@@ -60,11 +60,11 @@ public class Sales {
         this.finalAmount = finalAmount;
     }
 
-    public String getPaidMethod() {
+    public List<PaidMethod> getPaidMethod() {
         return paidMethod;
     }
 
-    public void setPaidMethod(String paidMethod) {
+    public void setPaidMethod(List<PaidMethod> paidMethod) {
         this.paidMethod = paidMethod;
     }
 

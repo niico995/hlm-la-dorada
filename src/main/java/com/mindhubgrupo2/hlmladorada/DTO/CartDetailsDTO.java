@@ -16,18 +16,17 @@ public class CartDetailsDTO {
 
     private Double amount;
 
-    private Cart cartHolder;
+    private Long cartHolder;
 
-    private Product productHolder;
+    private Long productHolder;
 
     public CartDetailsDTO(CartDetails cartDetails) {
         this.cartDetailsID = cartDetails.getCartDetailsID();
         this.quantity = cartDetails.getQuantity();
         this.amount = cartDetails.getAmount();
-        this.cartHolder = cartDetails.getCartHolder();
-        this.productHolder = cartDetails.getProductHolder();
+        this.cartHolder = cartDetails.getCartHolder().getCartID();
+        this.productHolder = cartDetails.getProductHolder().getProductID();
     }
-
     public Long getCartDetailsID() {
         return cartDetailsID;
     }
@@ -40,11 +39,11 @@ public class CartDetailsDTO {
         return amount;
     }
 
-    public Cart getCartHolder() {
+    public Long getCartHolder() {
         return cartHolder;
     }
 
-    public Product getProductHolder() {
+    public Long getProductHolder() {
         return productHolder;
     }
 }

@@ -8,7 +8,6 @@ import com.mindhubgrupo2.hlmladorada.Repositories.ProductRepository;
 import com.mindhubgrupo2.hlmladorada.Repositories.SalesRepository;
 import com.mindhubgrupo2.hlmladorada.models.Cart;
 import com.mindhubgrupo2.hlmladorada.models.Employee;
-import com.mindhubgrupo2.hlmladorada.models.Product;
 import com.mindhubgrupo2.hlmladorada.models.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +47,7 @@ public class SalesController {
     @PostMapping("/")
     public ResponseEntity<?> postNewSale(@RequestBody RecordSaleDTO recordSaleDTO) {
 
+        System.out.println(recordSaleDTO);
         Employee newEmployee = employeeRepository.findById(recordSaleDTO.employeeId()).orElse(null);
         if(newEmployee == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
@@ -65,6 +65,7 @@ public class SalesController {
                 recordSaleDTO.paidMethod(),
                 recordSaleDTO.taxes()
         );
+        salesRepository.save(saleCurrent);
 
         newCart.addSale(saleCurrent);
         newEmployee.addSale(saleCurrent);

@@ -6,6 +6,7 @@ import jakarta.persistence.OneToMany;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class EmployeeDTO {
 
@@ -19,7 +20,7 @@ public class EmployeeDTO {
 
     private WorkPosition workPosition;
 
-    private Set<Sales> sales = new HashSet<>();
+    private Set<SalesDTO> sales = new HashSet<>();
 
     public EmployeeDTO(Employee employee) {
         this.employeeID = employee.getEmployeeID();
@@ -27,7 +28,7 @@ public class EmployeeDTO {
         this.lastName = employee.getLastName();
         this.email = employee.getEmail();
         this.workPosition = employee.getWorkPosition();
-        this.sales = employee.getSales();
+        this.sales = employee.getSales().stream().map(SalesDTO::new).collect(Collectors.toSet());
     }
 
     public Long getEmployeeID() {
@@ -50,7 +51,7 @@ public class EmployeeDTO {
         return workPosition;
     }
 
-    public Set<Sales> getSales() {
+    public Set<SalesDTO> getSales() {
         return sales;
     }
 }

@@ -2,10 +2,12 @@
 package com.mindhubgrupo2.hlmladorada.models;
 
 
+import com.mindhubgrupo2.hlmladorada.DTO.SalesDTO;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Employee {

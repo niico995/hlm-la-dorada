@@ -1,8 +1,8 @@
 package com.mindhubgrupo2.hlmladorada.Controllers;
 
 import com.mindhubgrupo2.hlmladorada.DTO.CartDTO;
-import com.mindhubgrupo2.hlmladorada.DTO.CartDetailsDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RecordCartDetailDTO;
+import com.mindhubgrupo2.hlmladorada.DTO.RecordCartDetailStoreDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.*;
 import com.mindhubgrupo2.hlmladorada.models.*;
 import jakarta.transaction.Transactional;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,21 +49,30 @@ public class CartController {
     }
 
     @Transactional
-    @PostMapping("/")
-    public ResponseEntity<?> postCart(@RequestBody List<RecordCartDetailDTO> cartsDetails) {
+    @PostMapping("/cartOnline")
+    public ResponseEntity<?> postCartClientOnline(@RequestBody List<RecordCartDetailDTO> cartsDetails) {
+        System.out.println(cartsDetails);
 
         Cart cartCurrent = new Cart();
+        Double balance = 0.00;
 
-        cartsDetails.stream().map(cartDetail -> {
-            Product product = productRepository.findById(cartDetail.productoId()).orElse(null);
+        for (var i=0; i<cartsDetails.size();i++) {
+            System.out.println("cart " + i + ": " + cartsDetails.get(i));
+
+            Product product = productRepository.findById(cartsDetails.get(i).productoId()).orElse(null);
+            System.out.println("producto Antes: "+ product);
 
             if(product != null) {
 
-                if (cartDetail.quantity() > product.getStock()) {
+                if (cartsDetails.get(i).quantity() > product.getStock()) {
                     return new ResponseEntity<>("Insufficient " + product.getName() + " stock", HttpStatus.FORBIDDEN);
                 }
+                product.setStock(product.getStock() - cartsDetails.get(i).quantity());
+                System.out.println("producto Después: "+ product);
 
-                CartDetails newCartDetails = new CartDetails(cartDetail.quantity(), cartDetail.amount());
+                CartDetails newCartDetails = new CartDetails(cartsDetails.get(i).quantity(), cartsDetails.get(i).amount());
+                cartDetalsRepository.save(newCartDetails);
+                balance += (cartsDetails.get(i).quantity() * cartsDetails.get(i).amount());
 
                 product.addCartDetail(newCartDetails);
 
@@ -77,20 +85,75 @@ public class CartController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Product not found by its ID");
             }
 
-            return cartCurrent;
-        });
+        };
         if(!cartCurrent.getCartDetails().isEmpty()) {
             String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
             ClientOnline clientOnlineCurrent = clientOnlineRepository.findByEmail(userMail);
 
+            clientOnlineCurrent.setBalance(clientOnlineCurrent.getBalance() + balance);
             clientOnlineCurrent.addCart(cartCurrent);
 
             clientOnlineRepository.save(clientOnlineCurrent);
             cartRepository.save(cartCurrent);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("An error occurred while linking the order list to the cart");
         }
 
+        return new ResponseEntity<>(new CartDTO(cartCurrent), HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(cartCurrent, HttpStatus.OK);
+    @Transactional
+    @PostMapping("/cartStore")
+    public ResponseEntity<?> postCartClientStore(@RequestBody List<RecordCartDetailStoreDTO> cartsDetails) {
+        System.out.println(cartsDetails);
+
+        Cart cartCurrent = new Cart();
+        Double balance = 0.00;
+
+        for (var i=0; i<cartsDetails.size();i++) {
+            System.out.println("cart " + i + ": " + cartsDetails.get(i));
+
+            Product product = productRepository.findById(cartsDetails.get(i).productoId()).orElse(null);
+            System.out.println("producto Antes: "+ product);
+
+            if(product != null) {
+
+                if (cartsDetails.get(i).quantity() > product.getStock()) {
+                    return new ResponseEntity<>("Insufficient " + product.getName() + " stock", HttpStatus.FORBIDDEN);
+                }
+                product.setStock(product.getStock() - cartsDetails.get(i).quantity());
+                System.out.println("producto Después: "+ product);
+
+                CartDetails newCartDetails = new CartDetails(cartsDetails.get(i).quantity(), cartsDetails.get(i).amount());
+                cartDetalsRepository.save(newCartDetails);
+                balance += (cartsDetails.get(i).quantity() * cartsDetails.get(i).amount());
+
+                product.addCartDetail(newCartDetails);
+
+                cartCurrent.addCartDetails(newCartDetails);
+
+                productRepository.save(product);
+                cartDetalsRepository.save(newCartDetails);
+                cartRepository.save(cartCurrent);
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Product not found by its ID");
+            }
+
+        };
+        if(!cartCurrent.getCartDetails().isEmpty()) {
+
+            ClientStore clientStoreCurrent = clientStoreRepository.findByRut(cartsDetails.get(0).rut());
+
+            clientStoreCurrent.setBalance(clientStoreCurrent.getBalance() + balance);
+            clientStoreCurrent.addCarts(cartCurrent);
+
+            clientStoreRepository.save(clientStoreCurrent);
+            cartRepository.save(cartCurrent);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("An error occurred while linking the order list to the cart");
+        }
+
+        return new ResponseEntity<>(new CartDTO(cartCurrent), HttpStatus.OK);
     }
 
 }

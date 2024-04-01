@@ -13,7 +13,7 @@ public class ProductDTO {
 
     private Integer promos;
 
-    private String  name,details, brand, category;
+    private String  name,details, brand, category, image;
 
     public ProductDTO() {}
 
@@ -25,6 +25,11 @@ public class ProductDTO {
         this.details = product.getDetails();
         this.brand = product.getBrand();
         this.category = product.getCategory();
+        this.image = product.getImage();
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public Long getProductoDTOID() {

@@ -33,6 +33,18 @@ public class ProductController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> productByID(@PathVariable Long id){
+        Product product = productRepository.findById(id).orElse(null);
+
+        if(product == null){
+            return  new ResponseEntity<>("No product matches the id: " +id, HttpStatus.NOT_FOUND);
+        }
+
+        ProductDTO productDTO = new ProductDTO(product);
+
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
 
     @PostMapping("/newProduct")
     public ResponseEntity<?> addNewProducto(@RequestBody RegisterProductDTO registerProductDTO) {

@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,5 +29,19 @@ public class EmployeeController {
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEmployee(@PathVariable Long id){
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        Employee employee = employeeRepository.findByEmail(userMail);
+        if (employee.getRole().toString().equals("ADMIN")) {
+            Employee employeeCurrent = employeeRepository.findById(id).orElse(null);
+            if(employeeCurrent == null) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Empleado no encontrado con su id");
+            }
+            return new ResponseEntity<>(new EmployeeDTO(employeeCurrent), HttpStatus.OK);
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
     }
 }

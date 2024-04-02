@@ -48,6 +48,8 @@ public class CurrentController {
             clientOnline.setPhone(editClientDTO.phone());
             clientOnline.setPassword(editClientDTO.password());
 
+            clientOnlineRepository.save(clientOnline);
+
             return new ResponseEntity<>(new ClientOnlineDTO(clientOnline), HttpStatus.OK);
 
         } catch(Exception e){

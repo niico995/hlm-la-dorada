@@ -16,11 +16,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/purhcase")
+@RequestMapping("/api/purchase")
 public class PurchaseController {
 
         @Autowired
@@ -33,7 +34,7 @@ public class PurchaseController {
         ProductRepository productRepository;
 
         @GetMapping("/viewByDate")
-        public ResponseEntity<?> viewPurchasesByDate(@RequestBody LocalDate date) {
+        public ResponseEntity<?> viewPurchasesByDate(@PathVariable LocalDate date) {
             List<Purchase> purchases = purchaseRepository.findByDate(date);
 
             if(purchases.size() == 0){
@@ -44,7 +45,8 @@ public class PurchaseController {
 
         @GetMapping("/all")
         public ResponseEntity<?> allPruchases(){
-            List<Purchase> allPurchases = purchaseRepository.findAll(Sort.by(Sort.Direction.ASC,"purchaseDate"));
+            String user = SecurityContextHolder.getContext().getAuthentication().getName();
+            List<Purchase> allPurchases = purchaseRepository.findAll();
             if(allPurchases.size() == 0){
                 return new ResponseEntity<>("Aún no se han realizado compras.",HttpStatus.NOT_FOUND);
             }
@@ -66,9 +68,7 @@ public class PurchaseController {
                 if(newPurchaseDTO.unitCost() <= 0){
                     return new ResponseEntity<>("Insertar un costo válido.",HttpStatus.BAD_REQUEST);
                 }
-                if(newPurchaseDTO.date().toString().isBlank()){
-                    return new ResponseEntity<>("Insertar una fecha válida.",HttpStatus.BAD_REQUEST);
-                }
+
                 if(newPurchaseDTO.providerID().toString().isBlank()){
                     return new ResponseEntity<>("El proveedor debe ser seleccionado.",HttpStatus.BAD_REQUEST);
                 }
@@ -86,8 +86,9 @@ public class PurchaseController {
 
 
                 double totalCost = newPurchaseDTO.unitCost() * newPurchaseDTO.quantity();
+                LocalDateTime date = LocalDateTime.now();
 
-                Purchase newPurchase = new Purchase(newPurchaseDTO.quantity(),newPurchaseDTO.details(),newPurchaseDTO.date(),newPurchaseDTO.unitCost(), totalCost);
+                Purchase newPurchase = new Purchase(newPurchaseDTO.quantity(),newPurchaseDTO.details(),date,newPurchaseDTO.unitCost(), totalCost);
                 newPurchase.setProviderHolder(providerName);
                 purchaseRepository.save(newPurchase);
 

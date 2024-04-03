@@ -15,6 +15,7 @@ public class PurchasesDTO {
     public double unitCost, totalCost;
 
     public PurchasesDTO(Purchase purchase) {
+        this.purchaseID = purchase.getPurchaseID();
         this.details = purchase.getDetails();
         this.date = purchase.getDate();
         this.unitCost = purchase.getUnitCost();

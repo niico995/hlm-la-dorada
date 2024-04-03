@@ -50,6 +50,7 @@ public class PurchaseController {
             if(allPurchases.size() == 0){
                 return new ResponseEntity<>("No purchases done yet",HttpStatus.NOT_FOUND);
             }
+            System.out.println(allPurchases);
             return new ResponseEntity<>(allPurchases.stream().map(PurchasesDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
 
@@ -96,6 +97,9 @@ public class PurchaseController {
                 productName.setStock(productName.getStock()+ newPurchaseDTO.quantity());
 
                 productRepository.save(productName);
+                purchaseRepository.save(newPurchase);
+
+                System.out.println(newPurchase);
 
 
                 return new ResponseEntity<>("Your purchase has been recorded!", HttpStatus.CREATED);

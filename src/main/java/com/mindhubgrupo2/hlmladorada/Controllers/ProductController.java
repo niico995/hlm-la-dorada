@@ -1,6 +1,7 @@
 package com.mindhubgrupo2.hlmladorada.Controllers;
 
 
+import com.mindhubgrupo2.hlmladorada.DTO.ChangeQuantityDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.ProductDTO;
 import com.mindhubgrupo2.hlmladorada.DTO.RegisterProductDTO;
 import com.mindhubgrupo2.hlmladorada.Repositories.ProductRepository;
@@ -71,6 +72,29 @@ public class ProductController {
             return new ResponseEntity<>("Congrats, new product added to the inventory: " + registerProductDTO.name(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Sorry, something went wrong: " + e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/changeQuantity")
+    public ResponseEntity<?> changeProductQuantity(@RequestBody ChangeQuantityDTO changeQuantityDTO){
+        try {
+            Product productChange = productRepository.findById(changeQuantityDTO.productID()).orElse(null);
+
+            if (productChange == null){
+                return new ResponseEntity<>("Producto incorrecto, intente nuevamente",HttpStatus.BAD_REQUEST);
+            }
+
+            if (changeQuantityDTO.quantity() < 0){
+                productChange.setStock(productChange.getStock() - changeQuantityDTO.quantity());
+            } else {
+                productChange.setStock(productChange.getStock() + changeQuantityDTO.quantity());
+            }
+            productRepository.save(productChange);
+
+            return new ResponseEntity<>("Stock modificado en el producto: "+productChange.getName(),HttpStatus.CREATED);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>("Lo sentimos, algo salio mal: "+e, HttpStatus.BAD_REQUEST);
         }
     }
 }

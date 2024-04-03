@@ -4,5 +4,5 @@ import com.mindhubgrupo2.hlmladorada.models.Product;
 
 import java.time.LocalDateTime;
 
-public record NewPurchaseDTO(int quantity, String details, LocalDateTime date, double unitCost, Long providerID, Long productID) {
+public record NewPurchaseDTO(int quantity, String details, double unitCost, Long providerID, Long productID) {
 }

@@ -87,7 +87,7 @@ public class HlmladoradaApplication {
 				ClientOnline silvia = new ClientOnline("Silvia", "Morel", "silvia@mindhub.com",
 						passwordEncoder.encode("123"), "+3512311561", "Av. Olmos 500");
 
-				ClientStore emaStore = new ClientStore("Ema", "Nuel", "+651213321", "13245678", "Av. Paraíso 456");
+				ClientStore emaStore = new ClientStore("Ema", "Botta", "+651213321", "13245678", "Av. Paraíso 456");
 				ClientStore ricardo = new ClientStore("Ricardo", "Gutierrez", "+849814652", "987654321", "Juan B. Justo");
 
 				clientOnlineRepository.save(melba);

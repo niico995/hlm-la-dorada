@@ -45,7 +45,7 @@ public class CartController {
             List<Cart> carts = cartRepository.findAll();
             return new ResponseEntity<>(carts.stream().map(CartDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción.");
     }
 
     @Transactional
@@ -82,7 +82,7 @@ public class CartController {
                 cartDetalsRepository.save(newCartDetails);
                 cartRepository.save(cartCurrent);
             } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Product not found by its ID");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Producto no encontrado por su ID.");
             }
 
         };
@@ -96,7 +96,7 @@ public class CartController {
             clientOnlineRepository.save(clientOnlineCurrent);
             cartRepository.save(cartCurrent);
         } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("An error occurred while linking the order list to the cart");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Se produjo un error al vincular la lista de pedidos al carrito.");
         }
 
         return new ResponseEntity<>(new CartDTO(cartCurrent), HttpStatus.OK);
@@ -119,7 +119,7 @@ public class CartController {
             if(product != null) {
 
                 if (cartsDetails.get(i).quantity() > product.getStock()) {
-                    return new ResponseEntity<>("Insufficient " + product.getName() + " stock", HttpStatus.FORBIDDEN);
+                    return new ResponseEntity<>("Stock de " + product.getName() + " insuficiente.", HttpStatus.FORBIDDEN);
                 }
                 product.setStock(product.getStock() - cartsDetails.get(i).quantity());
                 System.out.println("producto Después: "+ product);
@@ -136,7 +136,7 @@ public class CartController {
                 cartDetalsRepository.save(newCartDetails);
                 cartRepository.save(cartCurrent);
             } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Product not found by its ID");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Producto no encontrado por su ID.");
             }
 
         };
@@ -150,7 +150,7 @@ public class CartController {
             clientStoreRepository.save(clientStoreCurrent);
             cartRepository.save(cartCurrent);
         } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("An error occurred while linking the order list to the cart");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Se produjo un error al vincular la lista de pedidos al carrito.");
         }
 
         return new ResponseEntity<>(new CartDTO(cartCurrent), HttpStatus.OK);

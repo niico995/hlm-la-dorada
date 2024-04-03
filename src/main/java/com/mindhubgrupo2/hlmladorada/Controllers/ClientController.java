@@ -41,7 +41,7 @@ public class ClientController {
             List<ClientOnline> clientsOnline = clientOnlineRepository.findAll();
             return new ResponseEntity<>(clientsOnline.stream().map(ClientOnlineDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción.");
     }
 
     @GetMapping("/clientStore")
@@ -52,7 +52,7 @@ public class ClientController {
             List<ClientStore> clientsStore = clientStoreRepository.findAll();
             return new ResponseEntity<>(clientsStore.stream().map(ClientStoreDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción");
     }
 
     @GetMapping("/clientOnline/{id}")
@@ -62,12 +62,12 @@ public class ClientController {
         if (employee.getRole().toString().equals("ADMIN")) {
             ClientOnline client = clientOnlineRepository.findById(id).orElse(null);
             if(client == null) {
-                return new ResponseEntity<>("The user with Id " + id + " is not found in the database.",
+                return new ResponseEntity<>("El usuario con el id: " + id + " no se encuentra en la base de datos.",
                         HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(new ClientOnlineDTO(client), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción.");
     }
 
     @GetMapping("/clientStore/{id}")
@@ -77,12 +77,12 @@ public class ClientController {
         if (employee.getRole().toString().equals("ADMIN")) {
             ClientStore client = clientStoreRepository.findById(id).orElse(null);
             if(client == null) {
-                return new ResponseEntity<>("The user with Id " + id + " is not found in the database.",
+                return new ResponseEntity<>("El usuario con el id: " + id + " no se encuentra en la base de datos.",
                         HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(new ClientStoreDTO(client), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción.");
     }
 
 }

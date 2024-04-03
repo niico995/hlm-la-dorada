@@ -135,6 +135,12 @@ public class AuthController {
         if(registerEmployeeDTO.password().isBlank()) {
             return new ResponseEntity<>("El campo de contraseña no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
+        if(registerEmployeeDTO.role().isBlank()) {
+            return new ResponseEntity<>("El campo de rol no debe estar vacío." , HttpStatus.FORBIDDEN);
+        }
+        if(registerEmployeeDTO.workPosition().isBlank()) {
+            return new ResponseEntity<>("El campo de puesto no debe estar vacío." , HttpStatus.FORBIDDEN);
+        }
         if(!registerEmployeeDTO.email().contains("@")) {
             return new ResponseEntity<>("El correo electrónico no tiene @" , HttpStatus.FORBIDDEN);
         }

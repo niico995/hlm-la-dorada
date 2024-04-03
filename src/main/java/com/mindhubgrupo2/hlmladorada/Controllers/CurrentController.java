@@ -53,7 +53,7 @@ public class CurrentController {
             return new ResponseEntity<>(new ClientOnlineDTO(clientOnline), HttpStatus.OK);
 
         } catch(Exception e){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("An error occurred on the server");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Se produjo un error en el servidor.");
 
         }
     }

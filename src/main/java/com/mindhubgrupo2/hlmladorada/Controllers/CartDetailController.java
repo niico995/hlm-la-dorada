@@ -36,7 +36,7 @@ public class CartDetailController {
             List<CartDetails> cartsDetails = cartDetalsRepository.findAll();
             return new ResponseEntity<>(cartsDetails.stream().map(CartDetailsDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción.");
     }
 
     //MODELO DE PRUEBA CARRITO / REEMPLAZADO EN CARTCURRENT

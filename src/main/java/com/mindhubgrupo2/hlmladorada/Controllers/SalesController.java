@@ -38,7 +38,7 @@ public class SalesController {
     public ResponseEntity<?> getSales(){
         List<Sales> allSales = (List<Sales>) salesRepository.findAll();
         if(allSales.size() == 0){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No sales done yet");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aún no se han realizado ventas.");
         }
         return new ResponseEntity<>(allSales.stream().map(SalesDTO::new).collect(Collectors.toList()), HttpStatus.OK);
     }
@@ -50,13 +50,13 @@ public class SalesController {
         System.out.println(recordSaleDTO);
         Employee newEmployee = employeeRepository.findById(recordSaleDTO.employeeId()).orElse(null);
         if(newEmployee == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empleado no encontrado.");
         }
 
         Cart newCart = cartRepository.findById(recordSaleDTO.cartId()).orElse(null);
 
         if(newCart == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrito no encontrado.");
         }
 
         Sales saleCurrent = new Sales(
@@ -74,7 +74,7 @@ public class SalesController {
         employeeRepository.save(newEmployee);
         salesRepository.save(saleCurrent);
 
-        return ResponseEntity.status(HttpStatus.OK).body("sale successfully created");
+        return ResponseEntity.status(HttpStatus.OK).body("Venta creada exitosamente.");
 
     }
 

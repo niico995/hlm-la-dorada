@@ -27,7 +27,7 @@ public class EmployeeController {
             List<Employee> employees = employeeRepository.findAll();
             return new ResponseEntity<>(employees.stream().map(EmployeeDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción.");
 
     }
 
@@ -42,6 +42,6 @@ public class EmployeeController {
             }
             return new ResponseEntity<>(new EmployeeDTO(employeeCurrent), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción.");
     }
 }

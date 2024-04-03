@@ -37,7 +37,7 @@ public class PurchaseController {
             List<Purchase> purchases = purchaseRepository.findByDate(date);
 
             if(purchases.size() == 0){
-                return new ResponseEntity<>("No purchases done that day", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No se realizaron compras ese día.", HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(purchases.stream().map(PurchasesDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
@@ -46,7 +46,7 @@ public class PurchaseController {
         public ResponseEntity<?> allPruchases(){
             List<Purchase> allPurchases = purchaseRepository.findAll(Sort.by(Sort.Direction.ASC,"purchaseDate"));
             if(allPurchases.size() == 0){
-                return new ResponseEntity<>("No purchases done yet",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Aún no se han realizado compras.",HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(allPurchases.stream().map(PurchasesDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
@@ -58,30 +58,30 @@ public class PurchaseController {
                 String user = SecurityContextHolder.getContext().getAuthentication().getName();
 
                 if(newPurchaseDTO.quantity() <= 0){
-                    return new ResponseEntity<>("Only positive quantitys allowed",HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("Sólo se permiten cantidades positivas.",HttpStatus.BAD_REQUEST);
                 }
                 if(newPurchaseDTO.details().isBlank()){
-                    return new ResponseEntity<>("Please, tell us something about the purchase", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("Por favor, cuéntanos algo sobre la compra.", HttpStatus.BAD_REQUEST);
                 }
                 if(newPurchaseDTO.unitCost() <= 0){
-                    return new ResponseEntity<>("Insert a valid cost",HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("Insertar un costo válido.",HttpStatus.BAD_REQUEST);
                 }
                 if(newPurchaseDTO.date().toString().isBlank()){
-                    return new ResponseEntity<>("Insert a valid date",HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("Insertar una fecha válida.",HttpStatus.BAD_REQUEST);
                 }
                 if(newPurchaseDTO.providerID().toString().isBlank()){
-                    return new ResponseEntity<>("Provider must be selected",HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("El proveedor debe ser seleccionado.",HttpStatus.BAD_REQUEST);
                 }
 
                 Provider providerName = providerRepository.findById(newPurchaseDTO.providerID()).orElse(null);
 
                 if(providerName == null){
-                    return new ResponseEntity<>("The provider do not exist",HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("El proveedor no existe.",HttpStatus.BAD_REQUEST);
                 }
 
                 Product productName = productRepository.findById(newPurchaseDTO.productID()).orElse(null);
                 if(productName == null){
-                    return new ResponseEntity<>("The product do not exist",HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("El producto no existe.",HttpStatus.BAD_REQUEST);
                 }
 
 
@@ -97,10 +97,10 @@ public class PurchaseController {
                 productRepository.save(productName);
 
 
-                return new ResponseEntity<>("Your purchase has been recorded!", HttpStatus.CREATED);
+                return new ResponseEntity<>("¡Tu compra ha sido registrada!", HttpStatus.CREATED);
 
             }catch (Exception e) {
-                return new ResponseEntity<>("Sorry, something went wrong "+e, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Perdón, algo salió mal "+e, HttpStatus.BAD_REQUEST);
             }
         }
 }

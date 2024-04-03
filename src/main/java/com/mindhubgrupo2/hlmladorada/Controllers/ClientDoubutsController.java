@@ -38,7 +38,7 @@ public class ClientDoubutsController {
             List<ClientDoubuts> doubuts = clientDoubutsRepository.findAll();
             return new ResponseEntity<>(doubuts.stream().map(ClientDoubutsDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción");
     }
 
     @PostMapping("/")
@@ -47,13 +47,13 @@ public class ClientDoubutsController {
         Employee employee = employeeRepository.findByEmail(userMail);
         if (employee.getRole().toString().equals("ADMIN") || employee.getRole().toString().equals("EMPLOYEE")) {
             if(!clientStoreRepository.existsByRut(recordDoubutsDTO.rut())) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Client not found in records");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Cliente no encontrado en registros");
             }
 
             ClientStore clientStore = clientStoreRepository.findByRut(recordDoubutsDTO.rut());
             System.out.println(clientStore);
             if(!(clientStore.getDoubutHolder() == null)) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You cannot have more than 1 debt");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No puedes tener más de 1 deuda");
             }
 
             ClientDoubuts clientDoubuts = new ClientDoubuts(
@@ -69,10 +69,10 @@ public class ClientDoubutsController {
             clientDoubutsRepository.save(clientDoubuts);
             clientStoreRepository.save(clientStore);
 
-            return ResponseEntity.status(HttpStatus.OK).body("successfully registered debt");
+            return ResponseEntity.status(HttpStatus.OK).body("Deuda registrada exitosamente");
 
 
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to perform this action");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permiso para realizar esta acción");
     }
 }

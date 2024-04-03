@@ -54,22 +54,22 @@ public class AuthController {
 
 
         if(loginDTO.email().isBlank()) {
-            return new ResponseEntity<>("The email field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de correo electrónico no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(loginDTO.password().isBlank()) {
-            return new ResponseEntity<>("The password field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de contraseña no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(employee == null && clientOnline == null) {
-            return new ResponseEntity<>("The email entered is not valid", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El correo electrónico ingresado no es válido.", HttpStatus.FORBIDDEN);
         }
         if (employee != null) {
             if(!passwordEncoder.matches(loginDTO.password(), employee.getPassword())) {
-                return new ResponseEntity<>("The password entered is not valid", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("La contraseña ingresada no es válida.", HttpStatus.FORBIDDEN);
             }
         }
         if (clientOnline != null) {
             if(!passwordEncoder.matches(loginDTO.password(), clientOnline.getPassword())) {
-                return new ResponseEntity<>("The password entered is not valid", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("La contraseña ingresada no es válida", HttpStatus.FORBIDDEN);
             }
         }
 
@@ -83,25 +83,25 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
 
         if(registerDTO.firstName().isBlank()) {
-            return new ResponseEntity<>("The name field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de nombre no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(registerDTO.lastName().isBlank()) {
-            return new ResponseEntity<>("The last name field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de apellido no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(registerDTO.email().isBlank()) {
-            return new ResponseEntity<>("The email field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de correo electrónico no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(registerDTO.password().isBlank()) {
-            return new ResponseEntity<>("The password field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de contraseña no debe estar vacío" , HttpStatus.FORBIDDEN);
         }
         if(!registerDTO.email().contains("@")) {
-            return new ResponseEntity<>("The email does not have @" , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El correo electrónico no tiene @" , HttpStatus.FORBIDDEN);
         }
         if(registerDTO.password().length() < 5) {
-            return new ResponseEntity<>("Your password must be at least 5 characters" , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Su contraseña debe tener al menos 5 caracteres" , HttpStatus.FORBIDDEN);
         }
         if(clientOnlineRepository.existsByEmail(registerDTO.email())) {
-            return new ResponseEntity<>("The email is already registered", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.FORBIDDEN);
         }
 
         ClientOnline newClient = new ClientOnline(
@@ -115,7 +115,7 @@ public class AuthController {
 
         clientOnlineRepository.save(newClient);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Your account was created successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Tu cuenta ha sido creada exitosamente");
     }
 
     @PostMapping("/register/employee")
@@ -124,25 +124,25 @@ public class AuthController {
 
 
         if(registerEmployeeDTO.firstName().isBlank()) {
-            return new ResponseEntity<>("The name field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de nombre no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(registerEmployeeDTO.lastName().isBlank()) {
-            return new ResponseEntity<>("The last name field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de apellido no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(registerEmployeeDTO.email().isBlank()) {
-            return new ResponseEntity<>("The email field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de correo electrónico no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(registerEmployeeDTO.password().isBlank()) {
-            return new ResponseEntity<>("The password field must not be empty " , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de contraseña no debe estar vacío." , HttpStatus.FORBIDDEN);
         }
         if(!registerEmployeeDTO.email().contains("@")) {
-            return new ResponseEntity<>("The email does not have @" , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El correo electrónico no tiene @" , HttpStatus.FORBIDDEN);
         }
         if(registerEmployeeDTO.password().length() < 5) {
-            return new ResponseEntity<>("Your password must be at least 5 characters" , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Su contraseña debe tener al menos 5 caracteres" , HttpStatus.FORBIDDEN);
         }
         if(employeeRepository.existsByEmail(registerEmployeeDTO.email())) {
-            return new ResponseEntity<>("The email is already registered", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.FORBIDDEN);
         }
 
         Employee newClient = new Employee(
@@ -156,7 +156,7 @@ public class AuthController {
 
         employeeRepository.save(newClient);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Your account was created successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Tu cuenta ha sido creada exitosamente.");
     };
     //String name, String lastName, String phone, String rut, String adress
     @PostMapping("/register/clientStore")
@@ -165,22 +165,22 @@ public class AuthController {
 
 
         if (registerClientStoreDTO.name().isBlank()) {
-            return new ResponseEntity<>("The name field must not be empty ", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de nombre no debe estar vacío.", HttpStatus.FORBIDDEN);
         }
         if (registerClientStoreDTO.lastName().isBlank()) {
-            return new ResponseEntity<>("The last name field must not be empty ", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de apellido no debe estar vacío", HttpStatus.FORBIDDEN);
         }
         if (registerClientStoreDTO.adress().isBlank()) {
-            return new ResponseEntity<>("The adress field must not be empty ", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de dirección no debe estar vacío.", HttpStatus.FORBIDDEN);
         }
         if (registerClientStoreDTO.rut().isBlank()) {
-            return new ResponseEntity<>("The rut field must not be empty ", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo de rutina no debe estar vacío.", HttpStatus.FORBIDDEN);
         }
         if (registerClientStoreDTO.phone().isBlank()) {
-            return new ResponseEntity<>("The phone field must not be empty ", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El campo del teléfono no debe estar vacío.", HttpStatus.FORBIDDEN);
         }
         if (clientStoreRepository.existsByRut(registerClientStoreDTO.rut())) {
-            return new ResponseEntity<>("The user is already registered", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El usuario ya está registrado.", HttpStatus.FORBIDDEN);
         }
 
         ClientStore newClient = new ClientStore(
@@ -193,6 +193,6 @@ public class AuthController {
 
         clientStoreRepository.save(newClient);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Your account was created successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Tu cuenta ha sido creada exitosamente.");
     };
 }

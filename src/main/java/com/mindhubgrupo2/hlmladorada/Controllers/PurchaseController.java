@@ -96,7 +96,9 @@ public class PurchaseController {
                 productName.setCost(newPurchaseDTO.unitCost());
                 productName.setStock(productName.getStock()+ newPurchaseDTO.quantity());
 
+                productName.setFinalPrice(newPurchaseDTO.unitCost()*1.25);
                 productRepository.save(productName);
+
                 purchaseRepository.save(newPurchase);
 
                 System.out.println(newPurchase);

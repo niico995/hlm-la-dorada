@@ -33,6 +33,8 @@ public class ClientController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
+
     @GetMapping("/clientOnline")
     public ResponseEntity<?> getAllClientsOnline(){
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
